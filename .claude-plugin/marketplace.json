@@ -1,0 +1,7 @@
+{
+  "name": "video-director",
+  "owner": { "name": "Sally Slater" },
+  "plugins": [
+    { "name": "video-director", "source": "./", "description": "Direct short motion-graphics and mixed-media videos from brief to render." }
+  ]
+}

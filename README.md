@@ -4,6 +4,10 @@
 
 You direct; Claude designs and builds. Nothing is animated until you have approved it as still frames, and every visual decision is a pick from 2-3 real options, never a reaction to one take.
 
+![Reviewing a storyboard: flipping through a scene's frames and pinning a note to one](docs/images/storyboard-walkthrough.gif)
+
+*Every example on this page is from a real project: a 52-second ad for [Best Light](https://bestlight.ai), a Mac webcam app. All the people in it are AI-generated.*
+
 ## What's inside
 
 - **Rules measured from real films, not guessed.** Text sizes, positions, reading times and motion rules come from measuring 59 films across seven types. The visual ideas come from studying 34 films and ads. The lessons from building real films were checked against 56 more before they became rules.
@@ -14,12 +18,31 @@ You direct; Claude designs and builds. Nothing is animated until you have approv
 
 ## How it works
 
-1. Brief and script. It asks whether to study reference films or build from scratch.
-2. Design options for direction and color, shown as still frames.
-3. A storyboard page you review and annotate.
-4. A motion spec for every change on screen.
-5. An animated test, then the full film, built with [HyperFrames](https://github.com/heygen-com/hyperframes).
-6. Render checks, then polish rounds until you sign off.
+**1. Brief and script.** It asks what the film is for, who it's for, what tools you have, and whether to study reference films or build from scratch.
+
+**2. Direction options.** Before any storyboard, you pick a direction from 2-3 labeled still frames of the same moment.
+
+![Two direction options for the same moment, labeled A and B](docs/images/direction-options.jpg)
+
+**3. The storyboard page.** One HTML page you open in a browser. It shows the whole film in order, with each tile showing how its scene ends.
+
+![The storyboard overview: eight scene tiles with times and lines](docs/images/storyboard-overview.jpg)
+
+It shows every change between scenes, side by side, with the move that connects them: the camera, what carries over, the timing and the easing.
+
+![The last frame of one scene beside the first frame of the next, with the cut described](docs/images/storyboard-transition.jpg)
+
+Then it shows each scene as a card. Flip through its frames, zoom in, pin numbered notes to any spot, and copy or download every note to hand back to Claude.
+
+![A scene card with frame tabs, an Add pin button and the frame](docs/images/storyboard-scene.jpg)
+
+**4. Motion spec.** Every change on screen gets a named move, timing and easing before anything is animated.
+
+**5. Animated test, then the full film**, built with [HyperFrames](https://github.com/heygen-com/hyperframes).
+
+**6. Render checks and polish rounds** until you sign off.
+
+![Frames from the finished ad](docs/images/finished-film.jpg)
 
 ## Install
 

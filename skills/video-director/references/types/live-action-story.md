@@ -49,7 +49,7 @@ In order: how the product is shown (a screen recording, or an approved rebuild),
 
 ## Text and sound
 
-- Captions of spoken lines are a brief decision, and by default they are not burned in: they ship as separate files (`../text-and-captions.md`, Captions). If the user wants them burned in, they sit in one home position, at least 3% of the frame height on a phone-watched film. The measured films set their few lines about 45-50% down over the picture (Logitech) or in a bar about 93% down (Progressive); pick one and keep it. Keep the bottom 17% clear of captions unless the type sits in a bar there on purpose.
+- Captions of spoken lines follow where the ad is posted (`../text-and-captions.md`, Captions): burned in for TikTok, Reels, Shorts and social feeds; separate files for a website or YouTube. One ad shown on its own website shipped its captions as files. Burned-in captions sit in one home position, at least 3% of the frame height on a phone-watched film. The measured films set their few lines about 45-50% down over the picture (Logitech) or in a bar about 93% down (Progressive); pick one and keep it. Keep the bottom 17% clear of captions unless the type sits in a bar there on purpose.
 - A thought line in voiceover is cut unless it says something the picture doesn't. On one film a two-word thought before the product moment added nothing and was cut.
 - A screen the viewer must read (a clock, an alert) gets its own close-up insert, at least 4% of the frame height for the words that matter. Over the shoulder, a laptop screen is unreadable.
 - Music carries the pace (`../sound-and-voice.md`).

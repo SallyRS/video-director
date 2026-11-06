@@ -48,7 +48,6 @@ Built on and informed by other people's open work:
 - **[motionmaxxing](https://github.com/Tejashmakwana/motionmaxxing)** by Tejashmakwana (Apache-2.0): the finding that a gallery of example films makes every brand look the same, which is why this skill pairs a default with a better decision instead.
 - **[onetake](https://github.com/feitangyuan/onetake)** by feitangyuan: its numbers on rhythm and what carries across a cut. Ideas only; no text or code is used.
 - **[Jesse Eisenbart's 20-style showcase](https://www.tiktok.com/@jesseeisenbart/video/7697657520793324818)**: the starting point for the animation style list.
-- **[Awesome Claude Video](https://github.com/opusvideo/awesome-claude-video)** and **[Awesome Claude Video Skills](https://github.com/zhuyansen/awesome-claude-video-skills)**: the lists used to find the skills above.
 
 The films named inside the skill are cited as examples to study. No footage, layouts or brand looks from them are included.
 

@@ -1,8 +1,10 @@
 {
   "name": "video-director",
-  "description": "Direct short videos that mix motion graphics with generated or supplied photos, footage and clips: brief, design options, storyboard, motion spec, test and HyperFrames build.",
-  "version": "1.2.0",
-  "author": { "name": "Sally Slater" },
+  "description": "Direct short videos that mix motion graphics with generated or supplied photos, footage and clips: brief, design options, storyboard, motion spec, sound engineering with real recorded effects, test and HyperFrames build.",
+  "version": "1.3.0",
+  "author": {
+    "name": "Sally Slater"
+  },
   "license": "MIT",
   "repository": "https://github.com/SallyRS/video-director"
 }

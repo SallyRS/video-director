@@ -7,7 +7,7 @@ This folder is Video Director's own copy of real-sfx by Alexander Korbanov at Cl
 - Copied: 2026-11-06
 
 `tools/sync-real-sfx.sh` (at the top of the Video Director repository) brings in what Clipwing has changed since the
-commit above and updates it. A weekly GitHub Action (`.github/workflows/real-sfx-upstream.yml`) runs it and opens a
+commit above and updates it. Once a week, a scheduled Claude task on the maintainer's Mac checks for changes, runs it, tests the result and opens a
 pull request when there is anything new.
 
 ## Changes made here

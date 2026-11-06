@@ -298,6 +298,7 @@ Before sending any page or render, go through every frame against `references/pr
 | `references/text-and-captions.md` | Any on-screen text: the text systems, reading times, safe areas by format |
 | `references/sound-and-voice.md` | Stages 2 and 7: narration, music, effects, silence, mix |
 | `references/sound-stage.md` | Stages 7-9: making the sound by film type, fitting music, sound sources and licences |
+| `real-sfx/SKILL.md` | Path B effects: real-sfx by Clipwing, included; read it only when `sound-stage.md` sends you there |
 | `references/motion-library.md` | Stage 7: proven shot shapes and transition families |
 | `references/motion-spec.md` | Stage 7: scene length, house settings, named moves, spec format |
 | `references/text-treatments.md` | Choosing how text looks and moves: the treatments seen in strong films, with sizes and timings |

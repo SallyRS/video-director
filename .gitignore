@@ -1,2 +1,6 @@
 .DS_Store
 __pycache__/
+# real-sfx's own local files
+skills/video-director/real-sfx/library_index.json
+skills/video-director/real-sfx/vendor/venv*/
+skills/video-director/real-sfx/vendor/models/

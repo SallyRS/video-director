@@ -6,7 +6,7 @@ Use these short response shapes with absolute links. Bracketed entries are fille
 
 | Stage | Load now | Response shape | Advance when |
 |---|---|---|---|
-| 1 Brief | Selected type | “Brief: [viewer, format, length, narration, people, real inputs, media tools, rough clip cost for live-action story ads, reference videos or from scratch]. Missing: [decisions]. [brief link]. Is this right?” | Brief decisions confirmed |
+| 1 Brief | Selected type | “Brief: [viewer, where it's posted and the caption choice that follows, format, length, narration, people, real inputs, media tools, rough clip cost for live-action story ads, reference videos or from scratch]. Missing: [decisions]. [brief link]. Is this right?” | Brief decisions confirmed |
 | 2 Script | Visual ideas; text/captions if words appear | “[script link]. Hook: [beat]. Promise: [claim]. Turn: [change]. Proof: [visible action]. Lock this script?” | Wording/structure approved |
 | 3 References | Reference films; animation styles if the user named a style | From scratch: “Building from scratch, so no reference films.” Otherwise record inspected files, timestamps and retained comparison film; disclose missing access before drawing | From scratch chosen, three inspected films, or explicit reduced coverage approval |
 | 4 Directions | Animation styles, visual ideas, options rounds, frame kit, storyboard format | “[options page]. A: [idea and mechanism]. B: [different idea]. C: [if useful]. Recommend [choice and reason]. Which direction?” | Direction chosen |

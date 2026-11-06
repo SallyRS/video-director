@@ -82,7 +82,7 @@ Make a contact sheet and read it, then check:
 - **Muted watch**: with the sound off, a first-time viewer can say what this is and what to do next (narration-led explainers excepted).
 
 - **Phone copy**: every render the user sees has a phone copy under 30 MB (`polish-rounds.md`, section 3), from the animated test on, not only in polish rounds.
-- **Captions**: shipped as separate files and a switchable track unless the brief says burned in (`text-and-captions.md`).
+- **Captions**: burned in or shipped as separate files according to where the film is posted (`text-and-captions.md`, Captions); a film posted to both kinds of place gets both versions.
 
 Then get the fresh read (section below).
 

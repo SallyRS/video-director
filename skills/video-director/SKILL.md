@@ -13,7 +13,7 @@ description: >
   captions to existing footage, or a single standalone animation such as a logo sting or lower third.
 ---
 
-> **Bundled scripts require Python 3.** Run them with `python3`.
+> **Bundled scripts run with `python3`.**
 
 # Video Director
 
@@ -90,13 +90,13 @@ Ask these as explicit decisions; never infer them or bury them in a settings lis
 - **Narration**: voiceover, on-screen lines only, or no words at all.
 - **People**: real-looking people, illustrated characters, hands only, or faceless, and whether their own voices are heard.
 - **What must be real**: logo file, font, the real product's screens or a demo account, real footage or photos of real named people or events (recaps, and brand films with named people, need real material), music (their own track, or Suno on a paid plan). How people, B-roll, places and 3D are made is yours to propose at stage 4.
-- **Viewer**: who watches, what they know and doubt, where they watch, what they should think or do afterward.
+- **Viewer**: who watches, what they know and doubt, where it's posted (this sets captions), what they should think or do afterward.
 - **Length**: check it against the type's usual range.
 - **Names and logos**: which may be shown.
 - **Media tools**: their clip tool (Higgsfield, another, or none) and stills (Codex or their own photos). If the proof needs real motion and there's no clip tool, say so (`references/media.md`). Also ask whether cuts may be uploaded to Google's Gemini API for the motion watch (`references/build-and-qa.md`).
 - **Inspiration**: ask in these words: "Would you like to draw inspiration from reference videos or build something from scratch?" Reference videos: ask for any film or style they have in mind (a named film counts as a reference) and for an OK to download. From scratch: skip stage 3. Unsure: recommend one in a line (from scratch for a common type; references for an uncovered look or a high-stakes film).
 
-Write the answers into `brief.md`. Don't invent answers; ask.
+Write the answers into `brief.md`; never invent them.
 
 ### 2. Script and story
 

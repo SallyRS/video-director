@@ -13,7 +13,7 @@ description: >
   captions to existing footage, or a single standalone animation such as a logo sting or lower third.
 ---
 
-> **Bundled scripts require Python 3.** Run them with `python3` (or `python` if that is the only Python 3 your environment exposes).
+> **Bundled scripts require Python 3.** Run them with `python3`.
 
 # Video Director
 
@@ -50,7 +50,7 @@ A film can mix types (a launch film with a data beat). Pick the main type and bo
 
 ### Numbers that change by type
 
-Starting values drawn from the films studied; the type file explains each one and what it rests on. Live-action story ads keep theirs in their type file.
+Starting values drawn from the films studied. Live-action story ads keep theirs in their type file.
 
 | | Product launch | Explainer | Brand film | Demo / tutorial | Social short (9:16) | Event / recap / data |
 |---|---|---|---|---|---|---|
@@ -88,8 +88,8 @@ Ask these as explicit decisions; never infer them or bury them in a settings lis
 - **Type** (table above), and whether it is explained or a pure showcase.
 - **Format**: 16:9, 9:16, 1:1 or 4:5, and any cutdowns (6, 15, 30, 60 s).
 - **Narration**: voiceover, on-screen lines only, or no words at all.
-- **People**: real-looking people, illustrated characters, hands only, or faceless.
-- **What must be real**: logo file, font, the real product's screens or a demo account, real footage or photos of real named people or events (recaps, and brand films with named people, need real material), music. How people, B-roll, places and 3D are made is yours to propose at stage 4.
+- **People**: real-looking people, illustrated characters, hands only, or faceless, and whether their own voices are heard.
+- **What must be real**: logo file, font, the real product's screens or a demo account, real footage or photos of real named people or events (recaps, and brand films with named people, need real material), music (their own track, or Suno on a paid plan). How people, B-roll, places and 3D are made is yours to propose at stage 4.
 - **Viewer**: who watches, what they know and doubt, where they watch, what they should think or do afterward.
 - **Length**: check it against the type's usual range.
 - **Names and logos**: which may be shown.
@@ -182,8 +182,9 @@ Build the rest and any cutdowns and render. **No render goes to the user until t
 ```bash
 python3 <skill>/scripts/check_render.py build/ --motion --video output/cut-v3.mp4 --out output/checks-v3
 python3 <skill>/scripts/cut_frames.py output/cut-v3.mp4 --out output/cuts-v3
-python3 <skill>/scripts/action_frames.py --actions build/actions.json --build build/ --video output/cut-v3.mp4 --out output/actions-v3
+python3 <skill>/scripts/action_frames.py --actions build/actions.json --motion-spec motion-spec.md --build build/ --video output/cut-v3.mp4 --out output/actions-v3
 python3 <skill>/scripts/continuity_sheet.py output/cut-v3.mp4 --items build/continuity.json --out output/continuity-v3
+python3 <skill>/scripts/check_sources.py assets/audio
 python3 <skill>/scripts/sound_balance.py --music build/audio/music.wav --effects build/audio/effects.wav --voice build/audio/voice.wav --events build/audio/events.json --out output/sound-v3
 python3 <skill>/scripts/watch_cut.py output/cut-v3.mp4 --out output/watch-v3 --upload-allowed --notes direction-notes.md
 ```

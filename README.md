@@ -14,7 +14,7 @@ You direct; Claude designs and builds. Nothing is animated until you have approv
 - **8 video types**, each with its own defaults, films worth studying, and a "default versus better" table: product launch, explainer, brand film, demo or tutorial, social short, event, recap or data, showcase, and live-action story.
 - **57 animation styles**, grouped by lead medium, each with an example film to look up.
 - **A zoomable storyboard page** you can pin notes to, a motion spec with a named move, timing and easing for every change, and an animated test before the full build.
-- **Sound made by film type.** Live-action films take their sound and spoken lines from the video model, checked with speech-to-text. Motion-design films get a few real recorded effects. Every film's music is fitted to the cut on its bar lines (`scripts/fit_music.py`). Every sound file is listed with its source and licence.
+- **Sound made by film type.** Live-action films take their sound and spoken lines from the video model, checked with speech-to-text. Motion-design films get a few real recorded effects. Every film's music is fitted to the cut on its bar lines (`scripts/fit_music.py`). Every sound file is listed with its source and licence, and `scripts/check_sources.py` checks the list.
 - **Render checks** in Python: frames on both sides of every cut, choppy motion, text size and reading time by role, sound levels, continuity between shots, delivery specs, and an optional motion watch by a video model.
 
 ## How it works

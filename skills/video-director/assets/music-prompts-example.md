@@ -26,17 +26,17 @@ instrumental, playful comedic underscore, pizzicato strings, plucked upright bas
 
 **2. Morning funk**
 ```
-instrumental, upbeat indie funk, clean Rhodes piano, tight muted funk guitar, handclaps, warm bass, 112 bpm, starts small and sly with just guitar and bass, builds steadily, then opens into a confident, feel-good groove with full drums, bright morning energy, clean button ending, no vocals
+instrumental, upbeat indie funk, clean Rhodes piano, tight muted funk guitar, handclaps, warm bass, 112 bpm, starts small and sly with just guitar and bass, builds steadily, then opens into a confident, feel-good groove with full drums, bright morning energy, steady beat throughout, ends on a single clean note, no vocals
 ```
 
 **3. Marimba pop**
 ```
-instrumental, quirky light pop, marimba and plucked synth, staccato rhythm, soft kick, 100 bpm, sneaky first section, steady build, then full drums, claps and a warm bass line, cheerful and polished, ends on one clean note, no vocals
+instrumental, quirky light pop, marimba and plucked synth, staccato rhythm, soft kick, 100 bpm, sneaky first section, steady build, then full drums, claps and a warm bass line, cheerful and polished, steady beat throughout, ends on a single clean note, no vocals
 ```
 
 **4. Retro spy groove**
 ```
-instrumental, cheeky retro spy groove, walking upright bass, brushed drums, muted trumpet stabs, vibraphone, 120 bpm, sly and tense at first, steady groove in the middle, then a big bright horn-section lift, playful not dark, ends on a single button note, no vocals
+instrumental, cheeky retro spy groove, walking upright bass, brushed drums, muted trumpet stabs, vibraphone, 120 bpm, sly and tense at first, steady groove in the middle, then a big bright horn-section lift, playful not dark, steady beat throughout, ends on a single clean note, no vocals
 ```
 
 **The plan for `fit_music.py`** once a track is chosen (cuts on its bar lines; each piece stretched 3% or less; a 10 dB dip under the bleep and 8 dB under the greeting; the track's own ending from 47 s, its last ring cut and faded at the film's end):

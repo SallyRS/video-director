@@ -69,4 +69,4 @@ Claude can't hear the mix, and the mix table below sets faders, not what is hear
 
 Deliver at about -14 LUFS integrated, true peak -1 dBTP or lower. Measure with `ffmpeg -i output/cut.mp4 -af ebur128=peak=true -f null - 2>&1 | tail -12`. Reference films range from about -27 to -9 LUFS and many clip, so don't copy their level.
 
-Trim music to its best window; fade in 0.2-0.4 s and out 0.8-1.5 s. Move at most one to three story turns toward strong musical beats, by no more than 0.15 s; product events never move to fit the music.
+Trim music to its best window; fade in 0.2-0.4 s and out 0.8-1.5 s, unless the track's own ending lands on the logo (then cut only its last ring, as in `sound-stage.md`, Music). Move at most one to three story turns toward strong musical beats, by no more than 0.15 s; product events never move to fit the music.

@@ -3,7 +3,9 @@
 each piece a little if needed, and dip the music where lines are spoken.
 
 python3 <skill>/scripts/fit_music.py assets/audio/track.wav --plan build/audio/music-plan.json \
-    --bars build/audio/track-bars.json --out build/audio/music.wav
+    --bars build/audio/track-beats.txt --beats-per-bar 4 --first-bar 0.46 --out build/audio/music.wav
+python3 <skill>/scripts/fit_music.py assets/audio/track.wav --bars build/audio/track-beats.txt --beats-per-bar 4 \
+    --first-bar 0.46 --clicks build/audio/track-bar-clicks.wav
 
 The plan says which seconds of the track go where in the film. Each piece has "track": [from, to] in track seconds
 and one of:
@@ -29,12 +31,19 @@ tracker gives beats, not bars: pass its beats with --beats-per-bar 4 (and --firs
 beat you have checked by ear or against a section map) and every fourth beat from there is used (3 for a waltz). With --snap,
 cuts within half a bar move to the nearest bar line before anything is made.
 
+Claude can't hear whether --first-bar is right, and a wrong guess moves every bar line while the off-bar check still
+passes against the wrong grid. --clicks OUT.wav writes the whole track with a short tick on every bar line (no plan
+needed): send it to the user, ask whether the ticks fall on the first beat of each bar all the way through, and write
+their answer in the build log before fitting.
+
 Checks, reported per piece:
   stretch  a piece stretched or squeezed by more than --max-stretch (default 0.03, 3%): the tempo change can be heard
   off-bar  a cut more than --bar-slack seconds (default 0.03) from a bar line, except at the track's very start
            or end, or an end heard only after the film's end. Each cut is reported once. Only with --bars
   overlap  two pieces playing over each other for longer than the crossfade
-  beyond   a piece reaching past the track's end (a piece running past the film's end is only noted: it is cut)
+  unchecked  no --bars given, so no cut was checked against the bar lines
+Gaps between pieces (silence, as for a dead stop) and music ending before the film are noted, not flagged.
+A piece reaching past the track's end is an error.
 Writes the fitted music (48 kHz, 24-bit stereo WAV) and OUT.json beside it with each piece's placement and
 stretch. Needs ffmpeg and ffprobe. Exit 0 all clear; 2 something to review (the music is still written); 1 an error,
 including a wrong command line.
@@ -42,11 +51,15 @@ including a wrong command line.
 from __future__ import annotations
 
 import argparse
+import array
 import json
+import math
 from pathlib import Path
 import shutil
 import subprocess
 import sys
+import tempfile
+import wave
 
 SR = 48000
 
@@ -118,6 +131,36 @@ def tempo_chain(speed: float) -> str:
     return ",".join(parts)
 
 
+def write_clicks(track: Path, bars: list[float], out: Path) -> int:
+    """The whole track with a short 1.5 kHz tick on every bar line, for the user to check by ear."""
+    length = duration(track)
+    n = int(length * SR) + 1
+    ticks = array.array("h", bytes(2 * n))
+    tick = [int(12000 * math.sin(2 * math.pi * 1500 * k / SR) * (1 - k / (0.03 * SR))) for k in range(int(0.03 * SR))]
+    for t in bars:
+        s0 = int(t * SR)
+        for k, v in enumerate(tick):
+            if 0 <= s0 + k < n:
+                ticks[s0 + k] = v
+    out.parent.mkdir(parents=True, exist_ok=True)
+    with tempfile.TemporaryDirectory() as tmp:
+        tick_wav = Path(tmp) / "ticks.wav"
+        with wave.open(str(tick_wav), "wb") as w:
+            w.setnchannels(1)
+            w.setsampwidth(2)
+            w.setframerate(SR)
+            w.writeframes(ticks.tobytes())
+        run = subprocess.run(["ffmpeg", "-hide_banner", "-loglevel", "error", "-y", "-i", str(track), "-i", str(tick_wav),
+                              "-filter_complex", f"[0:a]aresample={SR},aformat=channel_layouts=stereo,volume=0.6[m];"
+                              f"[1:a]aformat=channel_layouts=stereo[k];[m][k]amix=inputs=2:normalize=0:duration=first[o]",
+                              "-map", "[o]", "-c:a", "pcm_s16le", str(out)], capture_output=True, text=True)
+    if run.returncode != 0:
+        raise RuntimeError(f"ffmpeg failed: {run.stderr.strip()[-300:]}")
+    print(f"{len(bars)} bar lines ticked; first at {bars[0]:.3f} s. Ask the user whether every tick falls on the first "
+          f"beat of a bar: {out}")
+    return 0
+
+
 def gain_expr(dips: list[dict]) -> str | None:
     """The music is fully down from "from" to "to"; it ramps down before "from" and back up after "to"."""
     terms = []
@@ -145,8 +188,9 @@ class _Parser(argparse.ArgumentParser):
 def main() -> int:
     ap = _Parser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("track", type=Path)
-    ap.add_argument("--plan", type=Path, required=True)
-    ap.add_argument("--out", type=Path, required=True)
+    ap.add_argument("--plan", type=Path)
+    ap.add_argument("--out", type=Path)
+    ap.add_argument("--clicks", type=Path, help="write the track with a tick on every bar line, then stop")
     ap.add_argument("--bars", type=Path)
     ap.add_argument("--beats-per-bar", type=int, default=1)
     ap.add_argument("--first-bar", type=float)
@@ -159,6 +203,18 @@ def main() -> int:
     if not shutil.which("ffmpeg") or not shutil.which("ffprobe"):
         print("ffmpeg and ffprobe are needed", file=sys.stderr)
         return 1
+    if args.first_bar is not None and args.beats_per_bar == 1:
+        print("warning: --first-bar does nothing without --beats-per-bar", file=sys.stderr)
+    if args.clicks:
+        if not args.bars:
+            ap.error("--clicks needs --bars")
+        try:
+            return write_clicks(args.track, load_bars(args.bars, args.beats_per_bar, args.first_bar), args.clicks)
+        except (OSError, ValueError, RuntimeError) as e:
+            print(f"error: {e}", file=sys.stderr)
+            return 1
+    if not args.plan or not args.out:
+        ap.error("--plan and --out are needed (or --clicks to hear the bar lines)")
     try:
         plan = json.loads(args.plan.read_text())
         film = float(plan["film"])
@@ -168,12 +224,18 @@ def main() -> int:
         bars = load_bars(args.bars, args.beats_per_bar, args.first_bar) if args.bars else None
         if args.snap and bars:
             half = (bars[-1] - bars[0]) / (len(bars) - 1) / 2
-            for p in plan["pieces"]:
+            for i, p in enumerate(plan["pieces"]):
+                if not isinstance(p, dict) or not isinstance(p.get("track"), list) or len(p["track"]) != 2:
+                    raise RuntimeError(f"piece {i + 1}: needs \"track\": [from, to]")
                 a, b = (float(v) for v in p["track"])
                 na = nearest(bars, a) if a > 0.05 and abs(nearest(bars, a) - a) <= half else a
                 nb = nearest(bars, b) if b < track_len - 0.05 and abs(nearest(bars, b) - b) <= half else b
                 p["track"] = [na, nb]
         pieces = [place(p, i) for i, p in enumerate(plan["pieces"])]
+        for i, p in enumerate(pieces):
+            if p["track"][1] > track_len + 0.01:
+                raise RuntimeError(f"piece {i + 1}: reaches track {p['track'][1]:.2f} s, past the track's end at "
+                                   f"{track_len:.2f} s")
         gexpr = gain_expr(plan.get("dips", []))
         fade_out = float(plan.get("fade_out", 0))
         if bars and args.beats_per_bar == 1 and len(bars) > 2:
@@ -210,8 +272,6 @@ def main() -> int:
                 if abs(off) > args.bar_slack:
                     p["issues"].append(f"off-bar: cut at track {t:.3f} s ({name}) is {off * 1000:+.0f} ms from "
                                        f"the bar line at {nearest(bars, t):.3f} s")
-        if b > track_len + 0.01:
-            p["issues"].append(f"beyond: reaches track {b:.2f} s, past the track's end at {track_len:.2f} s")
         p["notes"] = []
         if p["start"] < -0.001:
             p["notes"].append(f"starts {-p['start']:.2f} s before 0:00; that part is left out")
@@ -224,6 +284,8 @@ def main() -> int:
         if n + 1 < len(order):
             q = pieces[order[n + 1]]
             over = p["start"] + p["length"] - q["start"]
+            if over < -xf - 0.001:
+                p["notes"].append(f"silence for {-over:.2f} s after it, until film {q['start']:.2f} s")
             # carry on past the join by one crossfade so the next piece fades in over it
             p["tail"] = xf if abs(over) <= xf + 0.001 and b + xf * p["speed"] <= track_len else 0.0
         else:
@@ -286,8 +348,12 @@ def main() -> int:
                           "stretch": round(pieces[i]["stretch"], 5), "issues": pieces[i]["issues"]} for i in order],
               "dips": plan.get("dips", []), "flags": flags}
     args.out.with_suffix(".json").write_text(json.dumps(report, indent=1) + "\n")
+    end = max(p["start"] + p["length"] for p in pieces)
+    if end < film - 0.01:
+        print(f"note: the music ends at film {end:.2f} s, {film - end:.2f} s before the film does")
     if not bars:
-        print("Bar lines not checked: pass --bars to check every cut against them.")
+        print("REVIEW unchecked: bar lines not checked; pass --bars to check every cut against them.")
+        flags.append("unchecked: no --bars, so no cut was checked against the bar lines")
     print(f"{len(flags)} to review; music in {args.out}" if flags else f"All clear; music in {args.out}")
     return 2 if flags else 0
 

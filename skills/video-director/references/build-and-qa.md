@@ -118,7 +118,7 @@ python3 <skill>/scripts/watch_cut.py output/cut-v3.mp4 --out output/watch-v3 --u
 
 Cut strips show the frames around cuts. The moment a click, a press, a hand on a knob or a pointer landing happens is usually in the middle of a shot, and nothing else looks at it closely. On one film the pointer on a join screen stopped 45 px below the camera menu and 70 px below the camera item it was meant to click; the cut strips, the render check and the motion watch all passed it, and the user found it by eye.
 
-From the motion spec, list every action moment in `build/actions.json`. A film with no click, press or touch inside a shot (most films with no pointer and no hand on a control) writes `[]`; the script then records that there were none and passes. Otherwise give each moment: time, a label saying what should happen, and either a target box in video pixels or, in a HyperFrames UI scene, the composition, the pointer's selector and the target's selector:
+From the motion spec, list every action moment in `build/actions.json`. A film with no click, press or touch inside a shot (most films with no pointer and no hand on a control) writes `[]`; the script then records that there were none and passes. Pass `--motion-spec motion-spec.md` as well: with an empty list it flags any line of the spec that mentions a click, tap, press, touch or pointer. Otherwise give each moment: time, a label saying what should happen, and either a target box in video pixels or, in a HyperFrames UI scene, the composition, the pointer's selector and the target's selector:
 
 ```json
 [{"time": 36.94, "label": "picks the app's camera in the camera menu", "composition": "compositions/join.html", "pointer": "#ptr", "target": "#opt"},
@@ -126,7 +126,7 @@ From the motion spec, list every action moment in `build/actions.json`. A film w
 ```
 
 ```bash
-python3 <skill>/scripts/action_frames.py --actions build/actions.json --build build/ --video output/cut-v3.mp4 --out output/actions-v3
+python3 <skill>/scripts/action_frames.py --actions build/actions.json --motion-spec motion-spec.md --build build/ --video output/cut-v3.mp4 --out output/actions-v3
 ```
 
 - Each action gets a strip: the whole frame, then zoomed crops at -0.2 s, -0.07 s, the action and +0.07 s, with the target boxed in red and the pointer's tip marked in yellow.
@@ -169,7 +169,7 @@ List the sounds that matter in `build/audio/events.json` as `must-hear` (a ding,
 python3 <skill>/scripts/sound_balance.py --music build/audio/music.wav --effects build/audio/effects.wav --voice build/audio/voice.wav --events build/audio/events.json --out output/sound-v3
 ```
 
-It measures every stem's momentary loudness (EBU R128, 0.4 s window) and flags effects sticking out above the music, must-hear events under it, texture sounds above it and voices too close to it. Give `--effects`, `--voice` or both. Its thresholds are starting values, not tested against listeners; a must-hear sound the user already approved can sit higher (one approved ding measured about +13 dB): report it, don't lower it. Exit 2 means flagged: change the mix or tell the user the numbers and ask. Report every labeled event's difference against the music with the render, so the user knows what to listen for. A clean report doesn't mean the mix sounds right; the user's ears decide. How to make the sounds: `sound-and-voice.md`, and for live-action films `types/live-action-story.md`.
+It measures every stem's momentary loudness (EBU R128, 0.4 s window) and flags effects sticking out above the music, must-hear events under it, texture sounds above it and voices too close to it. Give `--effects`, `--voice` or both. Its thresholds are starting values, not tested against listeners; a must-hear sound the user already approved can sit higher (one approved ding measured about +13 dB): report it, don't lower it. Exit 2 means flagged: change the mix or tell the user the numbers and ask. Report every labeled event's difference against the music with the render, so the user knows what to listen for. A clean report doesn't mean the mix sounds right; the user's ears decide. How to make the sounds: `sound-stage.md`.
 
 ## The fresh read (required)
 

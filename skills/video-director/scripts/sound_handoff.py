@@ -55,7 +55,7 @@ import sys
 from pathlib import Path
 
 # real-sfx's event kinds, their synonyms and the role each is placed with are read from its from_cues.py, which sits
-# beside this skill in the plugin (skills/real-sfx). This short list is used only when real-sfx can't be found.
+# inside this skill's folder (real-sfx/). This short list is used only when real-sfx can't be found.
 FALLBACK_KINDS = set("""whoosh wipe hit thump riser drop click press tap button select pop bubble blip appear tick tock
 chime bell ding notify bleep success ok done complete magic water coins key keystroke type typing glitch error camera
 ambience paper glass shatter data""".split())
@@ -63,7 +63,7 @@ ambience paper glass shatter data""".split())
 
 def real_sfx_kinds(where: Path | None) -> tuple[dict[str, str], dict[str, str]]:
     """{word: canonical kind} and {canonical kind: role} from real-sfx's from_cues.py, or the fallback list."""
-    folder = where or Path(__file__).resolve().parents[2] / "real-sfx"
+    folder = where or Path(__file__).resolve().parents[1] / "real-sfx"
     scripts = folder / "scripts"
     if (scripts / "from_cues.py").is_file():
         sys.path.insert(0, str(scripts))
@@ -495,12 +495,12 @@ def main() -> int:
     e.add_argument("plan", type=Path)
     e.add_argument("--out", type=Path, required=True)
     e.add_argument("--duration", type=float, help="the film's length in seconds, to catch times outside it")
-    e.add_argument("--real-sfx", type=Path, help="real-sfx's skill folder (default: skills/real-sfx beside this skill)")
+    e.add_argument("--real-sfx", type=Path, help="real-sfx's skill folder (default: real-sfx/ in this skill's folder)")
     pn = sub.add_parser("pins", help="real-sfx's cue sheet -> labels and named recordings for sheet.py apply")
     pn.add_argument("plan", type=Path)
     pn.add_argument("--cues", type=Path, required=True, help="the cue sheet from_cues.py wrote")
     pn.add_argument("--out", type=Path, required=True)
-    pn.add_argument("--real-sfx", type=Path, help="real-sfx's skill folder (default: skills/real-sfx beside this skill)")
+    pn.add_argument("--real-sfx", type=Path, help="real-sfx's skill folder (default: real-sfx/ in this skill's folder)")
     c = sub.add_parser("collect", help="real-sfx's results -> effects.wav, events.json, effects/ and SOURCES.md")
     c.add_argument("plan", type=Path)
     c.add_argument("--resolved", type=Path, required=True, help="real-sfx's <stem>_resolved_cues.json")

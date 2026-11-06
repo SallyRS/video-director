@@ -1,7 +1,7 @@
 {
   "name": "video-director",
   "description": "Direct short videos that mix motion graphics with generated or supplied photos, footage and clips: brief, design options, storyboard, motion spec, sound engineering with real recorded effects, test and HyperFrames build.",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "author": {
     "name": "Sally Slater"
   },

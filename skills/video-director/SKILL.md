@@ -27,7 +27,7 @@ The failure this skill exists to prevent is a video that feels like slides: sepa
 - **The script belongs to the user.** Keep its wording and order. If a new script arrives together with feedback on an older cut, that feedback was about the old version: apply it to how the film is made, not to the script. If the script seems to repeat an old problem, ask in one line.
 - **"Transformation" means on screen.** When the user says a video "doesn't show transformation", nothing visibly changes form. One element should become the next.
 - **Load taste first.** Before designing, read the project's `direction-notes.md` and any notes the user keeps about their design taste (memory files or project notes on design, color, layout, video). Earlier corrections live there; create an empty notes file for a new project.
-- **Version everything.** Every review page gets a new version number. The builder refuses to overwrite, so earlier rounds stay as a record.
+- **Version everything.** Every review page gets a new version number; the builder refuses to overwrite.
 - **Record decisions.** Each time the user picks an option or corrects something, add a dated line to `direction-notes.md` with the exact values. Later sessions read it instead of the chat.
 - **Before generating images or clips,** say what you will make and where it goes.
 
@@ -77,6 +77,7 @@ Read `references/checkpoints.md` for response templates and stage-specific loadi
 | 5 | Look decisions | one decision at a time, 2-3 options each | Each pick |
 | 6 | Storyboard | every scene, start and end frames, notes page | Approved, or notes |
 | 7 | Motion spec | scene lengths, then a named move, timing and easing for every change | Approved |
+| 7-9 | Sound | clip sound or library effects by film type, fitted music, `assets/audio/SOURCES.md` | Does it sound right? |
 | 8 | Animated test | the 2-4 hardest scenes in HyperFrames (a run from the start for live-action story ads) | Does it move right? |
 | 9 | Full build | the whole film and its cutdowns, checked frame by frame | Final |
 | 10 | Polish rounds | one new numbered render per round of notes, each note checked against its frames first | Each round signed off |
@@ -163,14 +164,14 @@ Read `references/motion-library.md`, `references/motion-spec.md` and the type fi
 
 1. **Fix scene lengths first**, by the type's rule (shot shape, narrated sentence, unit, step or beat), so every line stays readable (`references/text-and-captions.md` has the reading times). Short scenes force everything on screen in the first second. Tell the user the new total.
 2. Give **every change inside a scene and every change between scenes** a named move, timing, easing, and what carries over.
-3. Plan sound with the picture: `references/sound-and-voice.md`.
+3. Plan sound with the picture (`references/sound-and-voice.md`) and start the Sound stage (`references/sound-stage.md`).
 4. Write it into the storyboard JSON and `motion-spec.md`, rebuild with `--strict`, and show the user.
 
 `--strict` checks the motion fields (`references/storyboard-format.md`); review its fade/blur candidates and NOTE lines.
 
 ### 8. Animated test
 
-Build the 2-4 hardest scenes in HyperFrames first (the type file may say otherwise), with `data-text-role` on every element that holds words. Read the HyperFrames docs before writing composition HTML (`references/build-and-qa.md`). Run the outside comparison described there (a reference film of the same type, or the type's numbers for a film built from scratch) and report where ours loses. Ask the user to watch for pacing and for anything that still feels like slides. Run the stage 9 checks on the test too.
+Build the 2-4 hardest scenes in HyperFrames first (the type file may say otherwise), with `data-text-role` on every element that holds words. Read the HyperFrames docs before writing composition HTML (`references/build-and-qa.md`). Run the outside comparison described there (a reference film of the same type, or the type's numbers for a film built from scratch) and report where ours loses. Ask the user to watch for pacing and for anything that still feels like slides, and to listen to the sound. Run the stage 9 checks on the test too.
 
 **Every render the user sees** opens by saying which scenes it covers and what is still a placeholder. In a film with people shown as footage, a person's action is moving footage (a generated or supplied clip), never a still with a push; a shot not ready is left out or marked as a placeholder on screen. In live-action story ads, the product's screen is a screen recording of the real app unless a rebuilt interface was approved at stage 5.
 
@@ -188,8 +189,8 @@ python3 <skill>/scripts/watch_cut.py output/cut-v3.mp4 --out output/watch-v3 --u
 ```
 
 Exact render-check failures must be fixed; candidates need a recorded visual judgment (`references/build-and-qa.md`). Required on every render the user sees from stage 8, every strip and sheet opened:
-- **Cut strips** at every cut, and **action strips** at every click, press or touch inside a shot (a pointer off its target fails).
-- **Continuity sheets** for footage films: one verdict line per recurring prop and garment; `--verify` passes.
+- **Cut strips** at every cut; **action strips** at every click, press or touch inside a shot (a pointer off its target fails), or an empty `actions.json` for a film with none.
+- **Continuity sheets** for films with generated clips of recurring people, places or props: one verdict line per recurring prop and garment; `--verify` passes.
 - **Sound balance** from the mix's stems, for films with effects or voice. Claude can't hear: report the numbers.
 - **A fresh read** by a new agent, or a build-log line saying why not.
 
@@ -212,7 +213,7 @@ Once the full film exists, most of the work is rounds of notes against timestamp
 
 ## Design rules for every type
 
-These are the house rules for every type. A type file says where it loosens one; anything marked "ask first" there needs the user's OK.
+A type file says where it loosens one of these house rules; anything marked "ask first" there needs the user's OK.
 
 **Continuity, not slides**
 - At every change, something survives and carries into the next shot: an object (a chip becomes a tile), the words (a line stays while the picture changes), an eye line, or a system that rides every clip (a typed query, a name bar, a chapter color). If nothing survives, it is a slide change.
@@ -238,11 +239,11 @@ These are the house rules for every type. A type file says where it loosens one;
 - No colored accent borders or stripes, no small labels above headlines, no gradient text, no glow around logos.
 - Show activity, not screens: typing, results arriving, a hand or cursor causing each change, objects moving and docking.
 - Depth is a strong tool (layers at different distances, slabs with thickness, far things blurred), not a requirement. Flat 2D works when the object keeps changing form.
-- Designed backgrounds are flat: black, white, or one brand color per scene or chapter. Offer a gradient or glow only if the brand already uses one. Edge darkening is optional, not a default. In footage-led films (brand films, shorts, recaps, showcases, live-action story ads) the picture is the background, and designed backgrounds appear mostly on title and end cards.
+- Designed backgrounds are flat: black, white, or one brand color per scene or chapter. Offer a gradient or glow only if the brand already uses one. Edge darkening is optional, not a default. In footage-led films the picture is the background; designed backgrounds appear mostly on title and end cards.
 - Color has a job: state (problem vs. fixed), category, or chapter. Take it from the brand's own colors and shapes; never blur brand colors together.
 - End on one line or the logo alone, never a two-sentence tagline. Add a web address only when the viewer can act on a page now; the type file says when, and how long to hold the end.
 - The logo appears with a job: once at the end as a signature on the film's own surface, or as something the film forms. Never as decoration, never repeated.
-- The brand's own logo comes from its official file from the first frame it appears in, storyboard frames included. A redrawn copy gets details wrong (parts at the wrong height). With no file yet, label every frame that shows it as a placeholder.
+- The brand's own logo comes from its official file from the first frame it appears in, storyboard frames included. A redrawn copy gets details wrong. With no file yet, label every frame that shows it as a placeholder.
 - Items in one list or pile are the same kind of thing (all tasks, or all messages). A property of an item, such as a due date, is a tag on that item, not an item of its own.
 
 **People and pictures**
@@ -264,7 +265,7 @@ These are the house rules for every type. A type file says where it loosens one;
 - Each text role uses one or two ways of arriving for the whole film (word by word, whole line, typed, cut on), chosen by the line's job. Pure kinetic-type films are the exception.
 - Text typed into a product builds up progressively, never all at once. The first typing is slow enough to read (about 4-10 characters per second); later typing can run faster once the viewer knows the action. A complete, pre-filled prompt is fine only for fast repeated results.
 - Type only short text that finishes within about 2 s; show long text whole. Exceptions are in `references/text-and-captions.md`.
-- One size per text role for the whole film: every top-center line the same size, every opening line the same size. `scripts/check_render.py` enforces this.
+- One size per text role for the whole film (`scripts/check_render.py` enforces it).
 - Nothing in the picture reads like narration: a sentence printed inside the frame gets read as script.
 - One capitalization rule for every on-screen line, checked line by line.
 - Everything stays inside the safe area for the format. Minimum sizes by role, as font size against frame height: lines, openings, cards and claims 3%; captions, labels, names and typed text 2%; in a vertical film read on a phone, 3% for all of them; UI the viewer must read 4-5% (role `ui-read`). `scripts/check_render.py` enforces the minimums.
@@ -273,7 +274,7 @@ These are the house rules for every type. A type file says where it loosens one;
 
 ## Tools
 
-Images come from Codex or the user's photos, clips from the brief's clip tool, animation from the HyperFrames CLI, and checks from this skill's `scripts/`. The full table, with each tool's notes: `references/tools.md`.
+Which tool makes what, with each tool's notes: `references/tools.md`.
 
 ## Before you show anything
 
@@ -295,6 +296,7 @@ Before sending any page or render, go through every frame against `references/pr
 | `references/storyboard-format.md` | Writing storyboard or options JSON; the notes round trip |
 | `references/text-and-captions.md` | Any on-screen text: the text systems, reading times, safe areas by format |
 | `references/sound-and-voice.md` | Stages 2 and 7: narration, music, effects, silence, mix |
+| `references/sound-stage.md` | Stages 7-9: making the sound by film type, fitting music, sound sources and licences |
 | `references/motion-library.md` | Stage 7: proven shot shapes and transition families |
 | `references/motion-spec.md` | Stage 7: scene length, house settings, named moves, spec format |
 | `references/text-treatments.md` | Choosing how text looks and moves: the treatments seen in strong films, with sizes and timings |

@@ -57,7 +57,7 @@ In order: how the product is shown (a screen recording, or an approved rebuild),
 
 ## Sound and voices from the clips
 
-From one live-action story ad, over several rounds of the user's notes. Claude can't hear any of this: every claim about a sound comes from the user, a measurement or a listening model, and the report says which.
+From one live-action story ad, over several rounds of the user's notes. The order of work is in `../sound-stage.md`, path A; these are the lessons behind it. Claude can't hear any of this: every claim about a sound comes from the user, a measurement or a listening model, and the report says which.
 
 - **People's sounds come from the video model.** Make every person clip with its sound on from the start (`../media.md`, the action-clip command), prompted for only the natural sound of what is on screen: no speech, no music. Steps, the chair, the door and clothes are then timed to the picture because they come from it.
 - **Adding sound to an approved clip**: run Seedance 2.5 `video_edit` with the clip as the video reference and keep only its audio (find the edit model's exact id with `higgsfield model list` and estimate cost with `higgsfield generate cost` first). Check alignment by motion correlation (on one film it was within 0-2 frames), and check what the audio says with a speech-to-text pass (`whisper-cli` with the tiny English model; `../tools.md`): takes added extra words, such as "Hi" or the line said twice.

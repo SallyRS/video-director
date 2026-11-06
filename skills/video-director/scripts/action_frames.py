@@ -27,6 +27,9 @@ With --video, each action gets a strip: the whole frame at the action with the t
 at -0.2 s, -0.07 s, the action, and +0.07 s, with the target boxed (red) and, when read from the page, the pointer's
 tip marked (yellow). Open every strip. actions.json in --out lists each result.
 
+A film with no click, press or touch inside a shot (most films without a pointer or a hand on a control) lists
+none: an empty list [] writes a record saying so and passes. A missing actions file is still an error.
+
 Sub-compositions are assumed to fill the frame (their pixels are the film's pixels, scaled to the video's size).
 
 Exit 0 all strips written and every pointer on its target; 2 a pointer off its target (fix the move); 1 an error.
@@ -123,8 +126,8 @@ def load_actions(path: Path) -> list[dict]:
     data = json.loads(path.read_text(encoding="utf-8"))
     if isinstance(data, dict):
         data = data.get("actions")
-    if not isinstance(data, list) or not data:
-        raise ValueError(f"{path}: expected a non-empty JSON list of actions")
+    if not isinstance(data, list):
+        raise ValueError(f"{path}: expected a JSON list of actions ([] when the film has no click, press or touch)")
     out = []
     for i, a in enumerate(data, 1):
         if not isinstance(a, dict) or not isinstance(a.get("time"), (int, float)) or isinstance(a.get("time"), bool):
@@ -266,6 +269,12 @@ def main() -> int:
     ap.add_argument("--budget", type=int, default=8000, help="Chrome virtual time budget in ms")
     args = ap.parse_args()
     actions = load_actions(args.actions)
+    if not actions:
+        args.out.mkdir(parents=True, exist_ok=True)
+        (args.out / "actions.json").write_text(json.dumps({"video": None, "actions": [], "none": True}, indent=2),
+                                              encoding="utf-8")
+        print("No action moments listed: the film has no click, press or touch inside a shot. Nothing to check.")
+        return 0
     ui = [a for a in actions if a.get("composition")]
     if ui and not args.build:
         raise ValueError("actions with a composition need --build <HyperFrames project folder>")

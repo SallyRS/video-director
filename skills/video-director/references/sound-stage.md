@@ -105,9 +105,9 @@ The lessons behind these steps, and what failed, are in `types/live-action-story
 
 ## Sound engineering: placing effects with real-sfx
 
-Every library effect, in either path, is made here. The work is done by [real-sfx](https://github.com/Clipwing/skills/tree/main/skills/real-sfx) by Alexander Korbanov at Clipwing (MIT), a skill of its own in this plugin: `<real-sfx>` below is its folder, beside this skill's (`<skill>/../real-sfx`). It picks real recordings from the user's own sound library, places each on its frame and writes the effects track. This skill decides which moments get a sound, checks each pick, sets the levels against the music and keeps the sources list; real-sfx's own `SKILL.md` is needed only for options this section doesn't cover.
+Every library effect, in either path, is made here. The work is done by [real-sfx](https://github.com/Clipwing/skills/tree/main/skills/real-sfx) by Alexander Korbanov at Clipwing (MIT), kept as this skill's own copy: `<real-sfx>` below is its folder, `<skill>/real-sfx`. It picks real recordings from the user's own sound library, places each on its frame and writes the effects track. This skill decides which moments get a sound, checks each pick, sets the levels against the music and keeps the sources list; real-sfx's own `SKILL.md` is needed only for options this section doesn't cover.
 
-**Set it up once per machine.** Its settings and what it learns go in `~/.config/real-sfx/`, never in its folder: the plugin installs each version in a new folder, so anything written there is left behind on the next update.
+**Set it up once per machine.** Its settings and what it learns go in `~/.config/real-sfx/`, never in its folder: the plugin installs each version of this skill in a new folder, so anything written there is left behind on the next update.
 
 ```bash
 mkdir -p ~/.config/real-sfx/styles

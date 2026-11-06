@@ -15,7 +15,7 @@ You direct; Claude designs and builds. Nothing is animated until you have approv
 - **57 animation styles**, grouped by lead medium, each with an example film to look up.
 - **A zoomable storyboard page** you can pin notes to, a motion spec with a named move, timing and easing for every change, and an animated test before the full build.
 - **Sound made by film type.** Live-action films take their sound and spoken lines from the video model, checked with speech-to-text. Motion-design films get a few real recorded effects. Every film's music is fitted to the cut on its bar lines (`scripts/fit_music.py`). Every sound file is listed with its source and licence, and `scripts/check_sources.py` checks the list.
-- **A sound engineering step for effects.** Every sound is planned with the motion spec, one moment at a time. The included [real-sfx](https://github.com/Clipwing/skills/tree/main/skills/real-sfx) skill by Clipwing places a real recording from your own sound library on each planned frame. `scripts/sound_handoff.py` hands it the plan and brings its effects track back. It checks every sound against the plan (nothing missing, nothing extra, nothing off its frame) and fills in the sources list. Then the levels are measured against the music, and you listen.
+- **A sound engineering step for effects.** Every sound is planned with the motion spec, one moment at a time. Video Director's own copy of [real-sfx](https://github.com/Clipwing/skills/tree/main/skills/real-sfx) by Clipwing places a real recording from your own sound library on each planned frame. `scripts/sound_handoff.py` hands it the plan and brings its effects track back. It checks every sound against the plan (nothing missing, nothing extra, nothing off its frame) and fills in the sources list. Then the levels are measured against the music, and you listen.
 - **Render checks** in Python: frames on both sides of every cut, choppy motion, text size and reading time by role, sound levels, continuity between shots, delivery specs, and an optional motion watch by a video model.
 
 ## How it works
@@ -55,7 +55,7 @@ In Claude Code:
 /plugin install video-director@video-director
 ```
 
-This installs two skills: `video-director` and `real-sfx`. To install by hand instead, copy both `skills/video-director/` and `skills/real-sfx/` into `~/.claude/skills/`, side by side.
+Or copy `skills/video-director/` into `~/.claude/skills/`.
 
 ## Needs
 
@@ -75,7 +75,7 @@ Built on and informed by other people's open work:
 - **[saas-motion-kit](https://github.com/tugrawork-creator/saas-motion-kit)** by tugrawork-creator (MIT): its variety rules for shot length, easing and transitions in HyperFrames films.
 - **[motionmaxxing](https://github.com/Tejashmakwana/motionmaxxing)** by Tejashmakwana (Apache-2.0): the finding that a gallery of example films makes every brand look the same, which is why this skill pairs a default with a better decision instead.
 - **[onetake](https://github.com/feitangyuan/onetake)** by feitangyuan: its numbers on rhythm and what carries across a cut. Ideas only; no text or code is used.
-- **[real-sfx](https://github.com/Clipwing/skills/tree/main/skills/real-sfx)** by Alexander Korbanov at [Clipwing](https://clipwing.pro) (MIT): included as its own skill in `skills/real-sfx/`, which Video Director's sound engineering step runs. Its README gives the scripts as MIT, so the folder carries the standard MIT text in `LICENSE`. Two changes from Clipwing's version: a section in its `SKILL.md` on working inside a Video Director project, and `setup.py check` finding the index named by `REAL_SFX_INDEX`. Its interface sounds are [uisfx](https://www.npmjs.com/package/uisfx) by Yuki Capital (code MIT, sounds CC0), with their own licence files.
+- **[real-sfx](https://github.com/Clipwing/skills/tree/main/skills/real-sfx)** by Alexander Korbanov at [Clipwing](https://clipwing.pro) (MIT): a copy kept in `skills/video-director/real-sfx/`, which Video Director's sound engineering step runs. Its README gives the scripts as MIT, so the folder carries the standard MIT text in `LICENSE`. `real-sfx/UPSTREAM.md` records the Clipwing version it was copied from and every change made to it here; `tools/sync-real-sfx.sh` brings in Clipwing's later changes, and a weekly GitHub Action opens a pull request when there are any. Its interface sounds are [uisfx](https://www.npmjs.com/package/uisfx) by Yuki Capital (code MIT, sounds CC0), with their own licence files.
 - **[Jesse Eisenbart's 20-style showcase](https://www.tiktok.com/@jesseeisenbart/video/7697657520793324818)**: the starting point for the animation style list.
 
 The films named inside the skill are cited as examples to study. No footage, layouts or brand looks from them are included.

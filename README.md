@@ -14,7 +14,7 @@ You direct; Claude designs and builds. Nothing is animated until you have approv
 - **8 video types**, each with its own defaults, films worth studying, and a "default versus better" table: product launch, explainer, brand film, demo or tutorial, social short, event, recap or data, showcase, and live-action story.
 - **57 animation styles**, grouped by lead medium, each with an example film to look up.
 - **A zoomable storyboard page** you can pin notes to, a motion spec with a named move, timing and easing for every change, and an animated test before the full build.
-- **Sound made by film type.** Live-action films take their sound and spoken lines from the video model, checked with speech-to-text. Motion-design films get a few real recorded effects. Every film's music is fitted to the cut on its bar lines (`scripts/fit_music.py`). Every sound file is listed with its source and licence, and `scripts/check_sources.py` checks the list.
+- **Sound made by film type.** Live-action films take their sound and spoken lines from the video model, checked with speech-to-text. Motion-design films get a few real recorded effects. Every film's music is fitted to the cut on its bar lines (`scripts/fit_music.py`). Every sound file is listed with its source and licence, and `scripts/check_sources.py` checks the list. [real-sfx](https://github.com/Clipwing/skills/tree/main/skills/real-sfx) by Clipwing is included for placing real recorded effects from your own sound library.
 - **Render checks** in Python: frames on both sides of every cut, choppy motion, text size and reading time by role, sound levels, continuity between shots, delivery specs, and an optional motion watch by a video model.
 
 ## How it works
@@ -61,9 +61,9 @@ Or copy `skills/video-director/` into `~/.claude/skills/`.
 - Python 3 and [ffmpeg](https://ffmpeg.org/) for the render checks.
 - [HyperFrames](https://github.com/heygen-com/hyperframes) for the build.
 - Optional: [yt-dlp](https://github.com/yt-dlp/yt-dlp) to study reference films, a clip tool such as [Higgsfield](https://higgsfield.ai/) for generated footage, [Codex](https://github.com/openai/codex) for stills, and a [Gemini API](https://ai.google.dev/) key for the motion watch (`scripts/watch_cut.py`). The skill works without them and says what it can't check.
-- Optional, for sound: [Suno](https://suno.com/) for music (a paid plan for anything commercial), [whisper.cpp](https://github.com/ggml-org/whisper.cpp) to check what generated clips say, [aubio](https://aubio.org/) or [librosa](https://librosa.org/) to find a track's bar lines, and the [real-sfx](https://github.com/Clipwing/skills/tree/main/skills/real-sfx) skill to place real recorded effects.
+- Optional, for sound: [Suno](https://suno.com/) for music (a paid plan for anything commercial), [whisper.cpp](https://github.com/ggml-org/whisper.cpp) to check what generated clips say, [aubio](https://aubio.org/) or [librosa](https://librosa.org/) to find a track's bar lines, and your own sound library for the included real-sfx (it needs ffmpeg with the `drawtext` and `rubberband` filters, on macOS Homebrew's `ffmpeg-full`, and numpy for some scripts).
 
-No sound files are included: the licences of the free libraries don't allow sharing their files on their own. `references/sound-stage.md` lists where to get sounds and what each licence allows.
+The only sound files included are real-sfx's interface pack (uisfx, CC0). Sounds from the free libraries aren't included: their licences don't allow sharing the files on their own. `references/sound-stage.md` lists where to get sounds and what each licence allows.
 
 ## Credits
 
@@ -74,7 +74,7 @@ Built on and informed by other people's open work:
 - **[saas-motion-kit](https://github.com/tugrawork-creator/saas-motion-kit)** by tugrawork-creator (MIT): its variety rules for shot length, easing and transitions in HyperFrames films.
 - **[motionmaxxing](https://github.com/Tejashmakwana/motionmaxxing)** by Tejashmakwana (Apache-2.0): the finding that a gallery of example films makes every brand look the same, which is why this skill pairs a default with a better decision instead.
 - **[onetake](https://github.com/feitangyuan/onetake)** by feitangyuan: its numbers on rhythm and what carries across a cut. Ideas only; no text or code is used.
-- **[real-sfx](https://github.com/Clipwing/skills/tree/main/skills/real-sfx)** by Clipwing: an optional companion skill for placing real recorded effects, recommended for motion-design films. Linked, not included; its README gives its scripts as MIT.
+- **[real-sfx](https://github.com/Clipwing/skills/tree/main/skills/real-sfx)** by Alexander Korbanov at [Clipwing](https://clipwing.pro) (MIT): included in `skills/video-director/real-sfx/` for placing real recorded effects, copied unchanged from [Clipwing/skills](https://github.com/Clipwing/skills) at commit `edbefcb`. That repository's README gives the scripts as MIT and has no licence file, so the folder carries the standard MIT text in `LICENSE`. Its interface sounds are [uisfx](https://www.npmjs.com/package/uisfx) by Yuki Capital (code MIT, sounds CC0), with their own licence files.
 - **[Jesse Eisenbart's 20-style showcase](https://www.tiktok.com/@jesseeisenbart/video/7697657520793324818)**: the starting point for the animation style list.
 
 The films named inside the skill are cited as examples to study. No footage, layouts or brand looks from them are included.

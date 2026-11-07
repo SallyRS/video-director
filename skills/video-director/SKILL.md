@@ -254,30 +254,16 @@ A type file says where it loosens one of these house rules; anything marked "ask
 - The brand's own logo comes from its official file from the first frame it appears in, storyboard frames included. A redrawn copy gets details wrong. With no file yet, label every frame that shows it as a placeholder.
 - Items in one list or pile are the same kind of thing (all tasks, or all messages). A property of an item, such as a due date, is a tag on that item, not an item of its own.
 
-**People and pictures**
+**People and pictures** (making them, and other companies' logos: `references/media.md`)
 - People are a brief decision. When people appear: show the face of anyone named on screen; cast deliberately diverse people; show what each person is doing; show hierarchy by size and position.
-- Avoid stock-looking pictures: boardrooms, hands on laptops beside coffee, silhouettes at windows, bright even light, centered smiling poses.
 - Generated stills and clips never contain text, UI or logos. Type, UI and data are built in the frame, where they can be edited and are correct.
-- Never generate a real, named or famous person. Use the client's own photo or footage for anyone real.
 - When the product's interface is shown, it matches the real product, and it never shows an invented result as if the product produced it.
 
-**Names and logos of other companies**
-- Real tool logos only for integrations the product actually has, using official files, unaltered.
-- Never real media-outlet names or logos; invent them.
-
-**Text on screen** (details: `references/text-and-captions.md`)
-- Keep the text systems apart: on-screen lines, labels on things, captions of narration, the product's own text, legal text. Never stack three of them at once.
-- Each system has one home position for the film; the table above gives the default for the type. Move it only for a real collision, with a reason in the storyboard.
-- A line never covers eyes, a mouth, an icon, a logo or the thing being taught. (Type on a calm, still face in a brand film is an ask-first exception.)
-- In body lines, an emphasis word keeps the size of the rest of the line; a title or one deliberate giant word may differ. Mark it one way for the whole film (brightness, italic, a color matched to what it labels, the house color, or a drawn mark). No random accent colors.
-- Each text role uses one or two ways of arriving for the whole film (word by word, whole line, typed, cut on), chosen by the line's job. Pure kinetic-type films are the exception.
-- Text typed into a product builds up progressively, never all at once. The first typing is slow enough to read (about 4-10 characters per second); later typing can run faster once the viewer knows the action. A complete, pre-filled prompt is fine only for fast repeated results.
-- Type only short text that finishes within about 2 s; show long text whole. Exceptions are in `references/text-and-captions.md`.
-- One size per text role for the whole film (`scripts/check_render.py` enforces it).
-- Nothing in the picture reads like narration: a sentence printed inside the frame gets read as script.
-- One capitalization rule for every on-screen line, checked line by line.
-- Everything stays inside the safe area for the format. Minimum sizes by role, as font size against frame height: lines, openings, cards and claims 3%; captions, labels, names and typed text 2%; in a vertical film read on a phone, 3% for all of them; UI the viewer must read 4-5% (role `ui-read`). `scripts/check_render.py` enforces the minimums.
-- A cycling or word-swap line is used once per film (a deliberate repeat at the start and the end is allowed), and a line that lists things shows them one at a time.
+**Text on screen** (the full rules, sizes and reading times: `references/text-and-captions.md`; read it before any text appears)
+- Keep the text systems apart, each in one home position for the film (the type table above gives the default); never stack three at once.
+- One size per text role, above each role's minimum (`scripts/check_render.py` enforces both); one capitalization rule for every line; everything inside the format's safe area.
+- A line never covers eyes, a mouth, an icon, a logo or the thing being taught.
+- Typed product text builds up as it is typed and finishes within about 2 s.
 
 
 ## Tools

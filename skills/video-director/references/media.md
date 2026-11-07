@@ -37,7 +37,7 @@ Never generate a real, named or famous person, and never describe a living filmm
 2. Run Codex from that folder, in the background, logging to a file:
 
 ```bash
-cd <project>/assets/images && nohup codex exec -m gpt-6.1-sol -c model_reasoning_effort="high" --skip-git-repo-check "Follow the instructions in BRIEF-<set>.md in the current directory exactly." > codex-<set>.log 2>&1 &
+cd <project>/assets/images && nohup codex exec -m gpt-6.1-sol -c model_reasoning_effort="high" --skip-git-repo-check "Follow the instructions in BRIEF-<set>.md in the current directory exactly." < /dev/null > codex-<set>.log 2>&1 &
 ```
 
 3. Wait for the files named in the brief to appear (or for the process to end), then look at every image before using it.

@@ -5,11 +5,13 @@ Create this layout at stage 1. Every later stage writes into it.
 ```
 <project>/
   brief.md                  type, format, narration, people, footage, length, viewer,
-                            reference videos or from scratch (and any named film or style)
+                            what it's made of, reference videos or not (and any named film),
+                            the styles picked at stage 1b
   script.md                 locked lines (and narration), one row per scene
   direction-notes.md        every decision, dated, with exact values
   ideas.md                  the 8+ ideas per key line, what each picture says, the pick
-  references/               notes and measured stills from reference films, the one kept
+  references/               styles-v<N>.html (the style page from stage 1b),
+                            notes and measured stills from reference films, the one kept
                             reference file, and blind-compare-<version>.md for each comparison
                             (type-check-<version>.md instead for a film built from scratch)
   storyboard/

@@ -70,7 +70,8 @@ Read `references/checkpoints.md` for response templates and stage-specific loadi
 
 | # | Stage | You make | Gate |
 |---|---|---|---|
-| 1 | Brief | `brief.md`: type, format, narration, people, footage, length, reference videos or from scratch | Brief right? |
+| 1 | Brief | `brief.md`: type, format, narration, people, footage, length, reference videos or none | Brief right? |
+| 1b | Style | for films with motion graphics: a page with a picture of every animation style and 3-4 suggested | Which styles? |
 | 2 | Script and story | `script.md` with the hook, the structure from the type file, one job per beat | Script locked? |
 | 3 | References | only when the user chose reference videos: notes on 3+ accessible real films, or an explicit reference-input hold | (no stop; feeds stage 4) |
 | 4 | Direction options | 2-3 directions as real frames of the opening | Which direction? |
@@ -88,15 +89,20 @@ Ask these as explicit decisions; never infer them or bury them in a settings lis
 - **Type** (table above), and whether it is explained or a pure showcase.
 - **Format**: 16:9, 9:16, 1:1 or 4:5, and any cutdowns (6, 15, 30, 60 s).
 - **Narration**: voiceover, on-screen lines only, or no words at all.
+- **Made of**: ask in these words: "What will the film be made of: motion graphics, footage, screen recordings, or a mix?" Footage can be real or generated; which part leads is yours to propose at stage 4.
 - **People**: real-looking people, illustrated characters, hands only, or faceless, and whether their own voices are heard.
 - **What must be real**: logo file, font, the real product's screens or a demo account, real footage or photos of real named people or events (recaps, and brand films with named people, need real material), music (their own track, or Suno on a paid plan). How people, B-roll, places and 3D are made is yours to propose at stage 4.
 - **Viewer**: who watches, what they know and doubt, where it's posted (this sets captions), what they should think or do afterward.
 - **Length**: check it against the type's usual range.
 - **Names and logos**: which may be shown.
 - **Media tools**: their clip tool (Higgsfield, another, or none) and stills (Codex or their own photos). If the proof needs real motion and there's no clip tool, say so (`references/media.md`). Also ask whether cuts may be uploaded to Google's Gemini API for the motion watch (`references/build-and-qa.md`).
-- **Inspiration**: ask in these words: "Would you like to draw inspiration from reference videos or build something from scratch?" Reference videos: ask for any film or style they have in mind (a named film counts as a reference) and for an OK to download. From scratch: skip stage 3. Unsure: recommend one in a line (from scratch for a common type; references for an uncovered look or a high-stakes film).
+- **Reference videos**: ask in these words: "Are there any videos you'd like me to study before designing, or shall I start without reference videos? (We'll choose the look separately.)" Yes: ask which films (a named film counts), for an OK to download, and "Is it the look of these you want, or something else about them, like the pacing?" No: the film is built from scratch; skip stage 3. Unsure: recommend one in a line (from scratch for a common type; references for an uncovered look or a high-stakes film).
 
 Write the answers into `brief.md`; never invent them.
+
+### 1b. Style
+
+For a film with any motion graphics, the user picks the look from a page with a picture of every animation style: follow "Stage 1b" in `references/animation-styles.md`. Never pick the style without asking. Skip it for a film made only of footage (its look is planned at stage 4), and when the reference videos show the look: name that style in one line so the user can correct it.
 
 ### 2. Script and story
 
@@ -111,11 +117,11 @@ If the user brings a script, put it in `script.md` as a table (scene, name, line
 
 ### 3. References
 
-Skip this stage for a film built from scratch, saying so in one line. Otherwise study three accessible real films before drawing. If the user named a film, it is one of the three; if they named a style, at least one film is in that style (studied for its look only), and the rest are of this type; follow `references/reference-films.md` if access is unavailable. The type file names starting points and what to look for. Pull stills with ffmpeg and note the mechanism: what carries across cuts, where text sits (as a percentage of frame height), shot lengths, how the close is built. Borrow mechanisms, never a film's look, logo or footage. Method: `references/reference-films.md`.
+Skip this stage for a film built from scratch, saying so in one line. Otherwise study three accessible real films before drawing. If the user named a film, it is one of the three; if they picked styles at stage 1b, at least one film is in a picked style (studied for its look only), and the rest are of this type; follow `references/reference-films.md` if access is unavailable. The type file names starting points and what to look for. Pull stills with ffmpeg and note the mechanism: what carries across cuts, where text sits (as a percentage of frame height), shot lengths, how the close is built. Borrow mechanisms, never a film's look, logo or footage. Method: `references/reference-films.md`.
 
 ### 4. Direction options
 
-Read `references/animation-styles.md` when choosing a visual style. If the user named a style, at least one direction uses it; if they named a film, at least one direction uses that film's style and mechanisms, never its look. Otherwise pick styles that fit the brief and the lead medium, so the 2-3 directions differ in style as well as idea. The house rules still apply. Show the user actual still options.
+Turn the stage 1b picks into directions as "Stage 4" in `references/animation-styles.md` says; plan any footage's look with `references/footage-looks.md`. If the user named a film, at least one direction uses that film's style and mechanisms, never its look. The house rules still apply. Show the user actual still options.
 
 Make 2-3 directions that differ in their central idea (the type file says which kind of difference matters), not three colors of one layout. Each direction states its whole visual plan in the option's `plan` field:
 - the idea in one sentence, with the product in it;
@@ -291,7 +297,8 @@ Before sending any page or render, go through every frame against `references/pr
 | `references/pre-show-checklist.md` | Before sending any page or render |
 | `references/tools.md` | Which tool makes what, with notes |
 | `references/checkpoints.md` | Each stage: response template, approval gate and next permitted reference loads |
-| `references/animation-styles.md` | Stage 4, and stage 3 when the user named a style: style candidates grouped by kind, with example films and selection cues |
+| `references/animation-styles.md` | Stages 1b and 4, and stage 3 for a picked style: animation styles by group, each with a picture (`assets/style-library/`), an example film and how it's made |
+| `references/footage-looks.md` | Stage 4 for films with footage: ideas for how footage looks, not shown to the user as a menu |
 | `references/visual-ideas.md` | Stages 2, 4, 6 and 10: finding the film's idea, mixing media, turning each line into a picture, rules for whiteboard and 3D |
 | `references/options-rounds.md` | Stages 4-5: how to make and present options |
 | `references/frame-kit.md` | Stage 4 onward: the frame helpers, formats, rendering, common errors |

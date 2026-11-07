@@ -1,10 +1,10 @@
 # Studying reference films
 
-Use this file only when the user chose to draw inspiration from reference videos. When they chose to build from scratch, skip it; the type files and the house rules already carry what earlier films taught.
+Use this file only when the user asked for reference videos to be studied. When they chose to build from scratch (no reference videos), skip it; the type files and the house rules already carry what earlier films taught.
 
 ## Choosing the three
 
-If the user named a film, it is one of the three. If they named a style, find at least one strong film in that style (`animation-styles.md` lists examples for each); the rest are of this type, from the type file's list. The user agreed to downloads in the brief; ask again only for a film they haven't seen named.
+If the user named a film, it is one of the three. If they picked styles at stage 1b, find at least one strong film in a picked style (`animation-styles.md` lists examples for each); the rest are of this type, from the type file's list. The user agreed to downloads in the brief; ask again only for a film they haven't seen named.
 
 A film chosen for its style is studied for its look only (texture, color, drawing, framing). Don't measure its shot lengths, text positions or close as numbers for this film, and never use it as the comparison film unless it is of this type; those come from the films of this type. For a style whose only example is a Showcase moment, ask the user for a clip in that style or study the moment for its look.
 

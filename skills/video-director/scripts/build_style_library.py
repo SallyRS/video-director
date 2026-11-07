@@ -4,9 +4,11 @@
 python3 <skill>/scripts/build_style_library.py --out <project>/references/styles-v1.html \
     [--suggest "flat-vector=Clear for a process with many parts" --suggest "..."]
 
-Every style is always shown. --suggest puts a style at the top with a one-line reason; repeat it for each
-suggestion. The style id is the picture's file name without its extension.
-Exit 0: page written; 1: a style's picture is missing or an argument is wrong.
+Every style is always shown. --suggest puts a style at the top with a one-line reason; give it 3-4 times, for
+different styles. The style id is the picture's file name without its extension. The pictures are copied into
+a style-library/ folder next to the page, so the page still works when the project is moved or shared.
+It never overwrites a page: use a new version number. The one exception is the library's own index.html.
+Exit 0: page written; 1: a style's picture is missing, the page exists, or an argument is wrong.
 """
 from __future__ import annotations
 
@@ -15,10 +17,12 @@ import html
 import os
 from pathlib import Path
 import re
+import shutil
 import sys
 
 SKILL = Path(__file__).resolve().parent.parent
 STYLES = SKILL / "references" / "animation-styles.md"
+LIBRARY = SKILL / "assets" / "style-library"
 SHOWCASE = "https://www.tiktok.com/@jesseeisenbart/video/7697657520793324818"
 LINK = re.compile(r"\[[^\]]*\]\(([^)]+)\)")
 
@@ -70,7 +74,8 @@ def src(picture: Path, out: Path) -> str:
 
 def card(s: dict, out: Path, reason: str | None = None) -> str:
     why = f'<p class="why">{html.escape(reason)}</p>' if reason else ""
-    return (f'<figure class="card" id="{s["id"]}"><button class="pic" type="button" aria-label="Enlarge {html.escape(s["name"])}">'
+    anchor = f'suggested-{s["id"]}' if reason else s["id"]
+    return (f'<figure class="card" id="{anchor}"><button class="pic" type="button" aria-label="Enlarge {html.escape(s["name"])}">'
             f'<img src="{html.escape(src(s["picture"], out))}" alt="{html.escape(s["name"])} example" loading="lazy" width="768" height="432"></button>'
             f'<figcaption><h3>{html.escape(s["name"])}</h3>{why}<p>{inline(s["looks"])}.</p>'
             f'<p class="meta"><span>Good for:</span> {inline(s["good_for"])}</p>'
@@ -118,7 +123,14 @@ def main() -> int:
     ap.add_argument("--suggest", action="append", default=[], metavar="ID=REASON")
     args = ap.parse_args()
     out = args.out.resolve()
-    groups = parse(STYLES.read_text(encoding="utf-8"))
+    if out.exists() and out != LIBRARY / "index.html":
+        print(f"FAIL {out} exists. Use a new version number; earlier pages stay as the record.", file=sys.stderr)
+        return 1
+    try:
+        groups = parse(STYLES.read_text(encoding="utf-8"))
+    except (ValueError, KeyError) as e:
+        print(f"FAIL animation-styles.md: a table row is wrong ({e})", file=sys.stderr)
+        return 1
     by_id = {s["id"]: s for g in groups for s in g["styles"]}
     missing = [s["name"] for s in by_id.values() if not s["picture"].is_file()]
     if missing:
@@ -130,7 +142,25 @@ def main() -> int:
         if sid.strip() not in by_id:
             print(f"FAIL unknown style id: {sid.strip()}", file=sys.stderr)
             return 1
-        suggestions.append((by_id[sid.strip()], reason.strip() or None))
+        if not reason.strip():
+            print(f"FAIL no reason given for {sid.strip()}: write ID=one plain line", file=sys.stderr)
+            return 1
+        suggestions.append((by_id[sid.strip()], reason.strip()))
+    ids = [s["id"] for s, _ in suggestions]
+    if suggestions and not 3 <= len(ids) <= 4:
+        print(f"FAIL suggest 3-4 styles, not {len(ids)}", file=sys.stderr)
+        return 1
+    if len(set(ids)) != len(ids):
+        print("FAIL the same style is suggested twice", file=sys.stderr)
+        return 1
+    if out.parent != LIBRARY:
+        folder = out.parent / "style-library"
+        folder.mkdir(parents=True, exist_ok=True)
+        for s in by_id.values():
+            dest = folder / s["picture"].name
+            if not dest.is_file() or dest.stat().st_size != s["picture"].stat().st_size:
+                shutil.copy2(s["picture"], dest)
+            s["picture"] = dest
     parts, nav = [], []
     if suggestions:
         nav.append('<a href="#suggested">Suggested</a>')

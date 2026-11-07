@@ -89,7 +89,7 @@ Ask these as explicit decisions; never infer them or bury them in a settings lis
 - **Type** (table above), and whether it is explained or a pure showcase.
 - **Format**: 16:9, 9:16, 1:1 or 4:5, and any cutdowns (6, 15, 30, 60 s).
 - **Narration**: voiceover, on-screen lines only, or no words at all.
-- **Made of**: ask in these words: "What will the film be made of: motion graphics, footage, screen recordings, or a mix?" Footage can be real or generated. Which part fills most of the film is yours to propose at stage 4.
+- **Made of**: ask in these words: "What will the film be made of: motion graphics, footage, screen recordings, or a mix?" Footage can be real or generated; which part leads is yours to propose at stage 4.
 - **People**: real-looking people, illustrated characters, hands only, or faceless, and whether their own voices are heard.
 - **What must be real**: logo file, font, the real product's screens or a demo account, real footage or photos of real named people or events (recaps, and brand films with named people, need real material), music (their own track, or Suno on a paid plan). How people, B-roll, places and 3D are made is yours to propose at stage 4.
 - **Viewer**: who watches, what they know and doubt, where it's posted (this sets captions), what they should think or do afterward.
@@ -102,18 +102,7 @@ Write the answers into `brief.md`; never invent them.
 
 ### 1b. Style
 
-Run this step when the film has any motion graphics (all graphics, graphics around screen recordings, or graphics with footage), unless the user's reference videos already show the look they want: then name the style you'll take from them in one line, so they can correct it, and move on. A film made only of footage skips it; its look is planned in the stage 4 directions (`references/footage-looks.md`). Never pick the style without asking: most users don't know style names, so show pictures.
-
-1. From `references/animation-styles.md`, pick 3-4 styles that suit the film's subject, viewer and brand, and the people answer (no character styles for a faceless film).
-2. Build the page and give the user its path. It shows every style, with your suggestions on top:
-
-```bash
-python3 <skill>/scripts/build_style_library.py --out references/styles-v1.html --suggest "flat-vector=Clear for a process with many parts"
-```
-
-3. Recommend the 3-4 in one plain line each and ask: "Pick one or more to see as directions, describe the look you want in your own words, or say 'you choose'."
-
-Record the picks in `brief.md`. A style the user names or describes counts as a pick.
+For a film with any motion graphics, the user picks the look from a page with a picture of every animation style: follow "Stage 1b" in `references/animation-styles.md`. Never pick the style without asking. Skip it for a film made only of footage (its look is planned at stage 4), and when the reference videos show the look: name that style in one line so the user can correct it.
 
 ### 2. Script and story
 
@@ -132,7 +121,7 @@ Skip this stage for a film built from scratch, saying so in one line. Otherwise 
 
 ### 4. Direction options
 
-Read `references/animation-styles.md`, and `references/footage-looks.md` when the film has footage. When stage 1b ran, the directions use the styles picked there: with one style, the directions keep it and differ in idea; with two or three, each style gets a direction; with more, recommend which three to draw first; with "you choose", pick styles that fit the brief and the lead medium so the directions differ in style as well as idea. Plan how any footage looks inside each direction (scene, camera, light, color); in a mix, match it to that direction's animation style. If the user named a film, at least one direction uses that film's style and mechanisms, never its look. The house rules still apply. Show the user actual still options.
+Turn the stage 1b picks into directions as "Stage 4" in `references/animation-styles.md` says; plan any footage's look with `references/footage-looks.md`. If the user named a film, at least one direction uses that film's style and mechanisms, never its look. The house rules still apply. Show the user actual still options.
 
 Make 2-3 directions that differ in their central idea (the type file says which kind of difference matters), not three colors of one layout. Each direction states its whole visual plan in the option's `plan` field:
 - the idea in one sentence, with the product in it;
@@ -308,7 +297,7 @@ Before sending any page or render, go through every frame against `references/pr
 | `references/pre-show-checklist.md` | Before sending any page or render |
 | `references/tools.md` | Which tool makes what, with notes |
 | `references/checkpoints.md` | Each stage: response template, approval gate and next permitted reference loads |
-| `references/animation-styles.md` | Stages 1b and 4, and stage 3 for a picked style: animation styles by group, each with a picture, an example film and selection cues |
+| `references/animation-styles.md` | Stages 1b and 4, and stage 3 for a picked style: animation styles by group, each with a picture (`assets/style-library/`), an example film and how it's made |
 | `references/footage-looks.md` | Stage 4 for films with footage: ideas for how footage looks, not shown to the user as a menu |
 | `references/visual-ideas.md` | Stages 2, 4, 6 and 10: finding the film's idea, mixing media, turning each line into a picture, rules for whiteboard and 3D |
 | `references/options-rounds.md` | Stages 4-5: how to make and present options |
@@ -328,4 +317,3 @@ Before sending any page or render, go through every frame against `references/pr
 | `assets/frames-starter.html`, `assets/frame-kit.js` | Copy to start `frames.html` |
 | `assets/storyboard-starter.json`, `assets/options-direction-starter.json`, `assets/options-color-starter.json` | Copy to start the JSON for a page |
 | `assets/codex-image-brief.md` | Template for each image set |
-| `assets/style-library/` | Stage 1b: one picture per style, `index.html` showing them all, and the brief that made them |

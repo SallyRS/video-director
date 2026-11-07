@@ -12,11 +12,11 @@ Footage depends on supplied clips or generated stills and clips made under `medi
 | Split screen | Two or more views side by side, often the same moment twice | Expectations and reality in *(500) Days of Summer* (2009) | Before and after, expectation and reality, two people at once |
 | Screen-life | The story told through screens: windows, messages, calls | *Searching* (2018) | Software, calls, messages, anything that happens on a laptop or phone |
 | Freeze frame and caption | Action stops on a frame while a name or line holds | The character introductions in *Trainspotting* (1996) | Introducing a person, punchlines, marking a key moment |
-| One continuous take | No visible cuts; the camera follows the action through a space | *Birdman* (2014) | A single unbroken rush, a tour, one task from start to finish |
+| One continuous take | No visible cuts; the camera follows the action through a space | *Birdman* (2014) | A single unbroken rush, a tour, one task from start to finish; needs supplied footage, since generated clips run 3-8 seconds |
 | Selective color | Black and white with one element in color | The red coat in *Schindler's List* (1993) | Pointing at one thing; the product's effect as the only color |
 | High-contrast graphic | Hard black and white, near-silhouettes, splashes of color | *Sin City* (2005) | Drama, noir, a stylized brand story |
 | Tilt-shift miniature | Narrow focus makes real places look like models | The rowing race in *The Social Network* (2010) | Cities, logistics, overviews of busy places |
 | Live action with drawn characters | Drawn figures sharing the frame with real people and places | *Who Framed Roger Rabbit* (1988) | A product or idea as a character in the real world |
-| Thermal camera | False-color hot object, temperature scale and readout | Showcase 0:08–09 | Heat, intensity or a sensor's view; label invented readings as illustrative |
+| Thermal camera | False-color hot object, temperature scale and readout | Showcase 0:08–09 | Heat, intensity or a sensor's view; the scale and readout are added in the frames, never in the generated picture, and invented readings are labeled as illustrative |
 | Light painting | Colored luminous lines drawn on black | Showcase 0:22–23 | Tracing a path or an expressive light gesture |
 | Aurora | Luminous green and purple bands above dark mountains | Showcase 0:19–20 | Atmosphere, wonder or a natural-light motif |

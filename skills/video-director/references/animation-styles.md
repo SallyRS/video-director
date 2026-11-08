@@ -8,6 +8,7 @@ Ways of drawing or building the pictures in motion graphics and animation, group
    - be possible with the film's tools: a style **made with** clips needs the clip tool from the brief, or supplied footage (`media.md`, Without Higgsfield);
    - fit the people answer: no style marked in **Characters** for a faceless film;
    - look clearly different from each other, not three flat styles;
+   - meet any condition in **Consider for** that starts with "Only when";
    - for a film that shows a software product, include Product interface when the product's screens are available (`types/product-launch.md`).
 2. Build the page and give the user its path. It shows every style, with your suggestions on top, and copies the pictures next to it:
 
@@ -38,6 +39,24 @@ Every style has one example picture in `assets/style-library/`, linked in its ro
 - Rows marked **Showcase 0:00** come from [Jesse Eisenbart's 20-style showcase](https://www.tiktok.com/@jesseeisenbart/video/7697657520793324818); the time locates the example. Those descriptions come from sampled stills, not verified motion recipes.
 - The descriptions say what the style looks like, not how a source moved. Never infer movement, timing or construction from a still or a description. Design original motion with the bundled motion guidance; to reproduce a specific source movement, inspect that movement first, or offer original motion without claiming source fidelity.
 - Selection cues are suggestions, not claims made by any source. Adapt the visual principle to the brief rather than copying the example's look.
+
+## Motion design
+
+| Style | What it looks like | Example to study | Consider for | Made with | Characters | Picture |
+|---|---|---|---|---|---|---|
+| Isometric | Objects and systems drawn at a fixed angle with no perspective, like small diagrams | *Monument Valley* (2014) | How a product or system fits together, platforms, logistics | frames | — | [picture](../assets/style-library/isometric.webp) |
+| Line icons | Thin, even lines that draw themselves on, little or no fill | Apple's animated SF Symbols (2023) | Feature lists, steps, onboarding, short explainers | frames | — | [picture](../assets/style-library/line-icons.webp) |
+| Shape morphing | Bold flat shapes that turn smoothly into one another | Google's logo animation (2015), dots turning into the G | Logo reveals, brand openers, one thing becoming another | frames | — | [picture](../assets/style-library/shape-morphing.webp) |
+| Layered parallax | Flat drawings or photos split into layers that move at different depths | *The Kid Stays in the Picture* (2002) | Giving still pictures depth, history, photo stories | stills | — | [picture](../assets/style-library/layered-parallax.webp) |
+| Abstract 3D | Clean, softly lit 3D shapes in a few colors | Microsoft's "Bloom" art for Windows 11 (2021) | Premium tech, hardware, launch openers | stills | — | [picture](../assets/style-library/abstract-3d.webp) |
+| Soft 3D icons | Chubby, rounded 3D icons like soft clay or plastic | Microsoft's 3D Fluent emoji (2021) | Friendly app features, consumer tech, social ads | stills | — | [picture](../assets/style-library/soft-3d-icons.webp) |
+| Photo cut-out mix | Cut-out photos with white edges, flat shapes and hand-drawn scribbles | FEVR's "Food Waste" film for WWF | Youthful brands, social ads, stories built from real photos | stills | — | [picture](../assets/style-library/photo-cut-out.webp) |
+| Drawing over footage | Hand-drawn marks, arrows and circles on real video | The drawn sound effects in *Scott Pilgrim vs. the World* (2010) | Pointing things out in footage, how-tos, adding wit to product shots | clips | — | [picture](../assets/style-library/drawing-over-footage.webp) |
+| Duotone | Photos printed in two brand colors | Spotify's duotone campaign photos (2015) | Brands with two strong colors, making mixed photos match | stills | — | [picture](../assets/style-library/duotone.webp) |
+| Minimal mono | Black, white and gray with one accent color for what matters | *Pleasantville* (1998) | Serious or premium brands, pointing at one thing | frames | — | [picture](../assets/style-library/minimal-mono.webp) |
+| Frosted glass | See-through frosted panels floating over a blurred picture | Apple's Liquid Glass interface (2025) | Only when the brand's product already uses glass panels; keep text readable | frames | — | [picture](../assets/style-library/frosted-glass.webp) |
+| Soft gradient | Large soft color blends behind simple shapes | Stripe's moving homepage gradient | Only when the brand already uses gradients | frames | — | [picture](../assets/style-library/soft-gradient.webp) |
+| Bento grid | The screen split into rounded boxes of different sizes, one idea per box | Apple's keynote summary slides | Only when the brand already uses bento layouts and the idea is "many"; every box moves | frames | — | [picture](../assets/style-library/bento-grid.webp) |
 
 ## Drawn and illustrated
 
@@ -105,6 +124,6 @@ Every style has one example picture in `assets/style-library/`, linked in its ro
 
 ## Fit and constraints
 
-Apply the house rules, including no gradient text or logo glow, unless the user explicitly overrides them. For Word art, use dimensional or arched lettering in permitted solid colors. Neon grid lines are illustrative objects; they do not authorize glowing logos or glowing text. Where a type file explicitly offers an exception, follow its approval requirement. A note you author in the storyboard alone grants no exception. An explicit user instruction can override a skill rule; record that instruction and preserve its scope without implying broader permission.
+Apply the house rules, including no gradient text or logo glow, unless the user explicitly overrides them. Frosted glass, Soft gradient and Bento grid break the house rules unless the brand already uses that look, so their rows say "Only when". For Word art, use dimensional or arched lettering in permitted solid colors. Neon grid lines are illustrative objects; they do not authorize glowing logos or glowing text. Where a type file explicitly offers an exception, follow its approval requirement. A note you author in the storyboard alone grants no exception. An explicit user instruction can override a skill rule; record that instruction and preserve its scope without implying broader permission.
 
 Stop-motion, clay and paper looks made with generated media must hold one consistent look across every shot; check that before choosing them. Retro interfaces are illustrative unless they match the real product. Keep text readable and test op-art, dither, glitch, flicker-prone and fast-changing styles for legibility in the actual render. Never name a direction after a film, director or company; name the style. Define moves with the bundled motion library and motion spec after still approval.

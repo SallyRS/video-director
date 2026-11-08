@@ -19,6 +19,9 @@ Every word on screen belongs to one of these. Each has its own job, home positio
 - Banned: stacked fragments ("Four villains. One draft. Exact lines."), triplets of short parallel lines, "Meet X", "Introducing", "Not just X, it's Y", gradient text, accent words in a second typeface or a random color, a typed headline with a caret.
 - Nothing printed inside the picture should read like narration. A sentence inside the frame gets read as script; a name tied to an object (a label) does not.
 - In body lines, an emphasis word keeps the size of its line; a title or one deliberate giant word may differ. Pick one marking for the film: brightness or a tint that settles to the line colour, italic of the same face, a colour matched to what the word labels, the house colour, or a drawn mark. No random accent colors.
+- Each text role uses one or two ways of arriving for the whole film (word by word, whole line, typed, cut on), chosen by the line's job. Pure kinetic-type films are the exception.
+- A cycling or word-swap line is used once per film (a deliberate repeat at the start and the end is allowed), and a line that lists things shows them one at a time.
+- One capitalization rule for every on-screen line.
 - One size per text role for the whole film. Mark every element that holds words with `data-text-role` so `scripts/check_render.py` can check it.
 
 ## Reading time

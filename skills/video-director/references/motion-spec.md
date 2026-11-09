@@ -104,6 +104,7 @@ Write each scene as a timed table:
 - **Vary the camera move under it every time**: push into a tile, glide down a surface, pull back, follow a moving object, tilt up, stay locked while elements shrink into place. Never the same camera move twice; the builder's `--strict` check compares the `camera` field of every `to_next`.
 - **Accents** in designed films: one or two hard cuts landed mid-motion (usually where the color or chapter changes, with the moving thing at full speed on both sides of the cut), and at most one deliberate full stop. Chapter films add a claim card at each chapter (`types/product-launch.md`).
 - No more than two real camera moves in one change. Four things happening at once reads as noise.
+- **A shape that floods the frame** (a color fill, an iris, a word or mark scaled through the camera) grows past all four corners, not just to the edges, and takes about 0.3 s to cover the frame. Faster, and half the screen changes between two frames; stopping at the edges leaves the corners showing the old scene.
 - No blur-filter or crossfade transitions between scenes unless the storyboard's `style.dissolves` is true. Allowed: a dissolve into the end card, a very short text blur-out, real camera motion blur in footage.
 
 ## 7. Named moves

@@ -93,7 +93,7 @@ The lessons behind these steps, and what failed, are in `types/live-action-story
 ## Path B: motion design and app screens
 
 1. **List the moments that make a real sound** in the sound plan (above): usually only the one click or tap that matters, a message arriving on a phone, a machine on screen. No sound on text, lines arriving or the logo (`sound-and-voice.md`, Effects). Most motion-design films need fewer than five effects; many need none.
-2. **Make and place them with Sound engineering** (below): real recordings from the user's sound library, each on the frame of its event, on their own stem (`build/audio/effects.wav`) with an events file (`build/audio/events.json`) marking which must be heard. Never synthesize an effect: synthetic clicks were called weird choices on one film and were replaced with real trackpad recordings.
+2. **Make and place them with Sound engineering** (below): real recordings from the user's sound library, each on the frame of its event, on their own stem (`build/audio/effects.wav`) with an events file (`build/audio/events.json`) marking which must be heard. Real recordings come first. A sound made in code is allowed only when neither the library nor an Openverse search (Where sounds come from, below) has anything that fits, and the user has heard it next to the closest real recording and agreed; it then goes into the sound plan as that moment's `file`, and its `SOURCES.md` row names the tool and settings that made it. Made sounds can miss: synthetic clicks on one film were called weird choices and were replaced with real trackpad recordings.
 3. **Set levels by measurement** with `sound_balance.py`, then by the user's ears, not by fader.
 
 **Narration**, when the brief has it (any path):
@@ -170,7 +170,7 @@ Run `. ~/.config/real-sfx/env.sh` in every shell that runs its scripts, and neve
 | real-sfx on its own | Here |
 |---|---|
 | Finds the moments itself (from the composition, the picture or a screen recording) and sounds most of them | Only the planned moments; its own list of moments is a check for missed sounds, never a source |
-| Interface sounds from its bundled uisfx pack (made by synthesis) | `--ui library`: real recordings first. Use uisfx only when the library has nothing that fits and the user has heard it and agreed |
+| Interface sounds from its bundled uisfx pack (made by synthesis) | `--ui library`: real recordings first. Use uisfx only when the library and an Openverse search have nothing that fits and the user has heard it and agreed |
 | A small-sound layer (`texture.py`) and a dark bed (`bed.py`) under an effects-only film | Neither, unless the user asks: music or the clips' sound carries the film |
 | The film's loudness set to -14 LUFS | `--no-loudnorm`; loudness is set in the mix with the music and voice |
 | A new MP4 with its sound | Only the effects track and the resolved cues are used; the film is mixed from stems |
@@ -212,9 +212,18 @@ Download sounds into the user's sound library folder (Sound engineering, above) 
 | [BigSoundBank](https://bigsoundbank.com/) | real recordings by Joseph Sardin (trackpad clicks, doors, household sounds) | CC0: any use, no credit needed |
 | [Mixkit](https://mixkit.co/free-sound-effects/) | short effects and interface sounds | Mixkit Sound Effects Free License: commercial use, no credit needed; the files can't be shared or sold on their own |
 | [Pixabay](https://pixabay.com/sound-effects/) | effects and everyday recorded sounds from many uploaders | Pixabay Content License: commercial use, no credit needed; the files can't be shared or sold on their own |
+| [Openverse](https://openverse.org/) | a search across openly licensed sound from Freesound, Wikimedia Commons, Jamendo and others | each result carries its own licence, as on its source site |
 | Suno | music made from your prompts | made on a paid plan: commercial use; made on the free plan: no commercial use |
 
 Licences change: read the licence page on the day of download and record what it said.
+
+**When the user's library has nothing that fits a planned moment,** search Openverse before asking the user to look. It needs no account or key:
+
+```bash
+curl -s -A "video-director" "https://api.openverse.org/v1/audio/?q=<plain words: trackpad click>&license=cc0&page_size=10"
+```
+
+Each result gives `title`, `creator`, `license` and `license_version`, `duration` (milliseconds), `source` and `foreign_landing_url` (the sound's own page). Use `license=cc0` for any film; drop it only when the brief allows credits, and never take `by-nc` for an ad or paid work. The `url` field is often a 128 kbps MP3 preview: show the user the landing pages of the best 3-5, and have them download the original (WAV or FLAC; Freesound needs a free login) into their sound library. Fill the `SOURCES.md` row from the result's fields and the landing page as read that day.
 
 ## `assets/audio/SOURCES.md`
 

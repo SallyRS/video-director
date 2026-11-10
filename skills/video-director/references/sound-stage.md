@@ -48,10 +48,11 @@ At stage 7, write `build/audio/sound-plan.json` from the motion spec: one entry 
 
 - `t`: film seconds, the first frame of the event (from the composition's own times where it has them: a press at 0.9 s in a scene starting at 20.25 s is 21.15).
 - `label`: what happens on screen. It names the sound in every report and in `SOURCES.md`.
-- `type`: real-sfx's kind of event (click, pop, chime, success, hit, thump, whoosh, key, and their synonyms: the real-sfx skill's `references/typed-cues.md`).
-- `hear`: `must-hear` (the ding, the click that matters) or `texture` (a rustle, steps, a room).
+- `type`: real-sfx's kind of event (click, pop, chime, success, hit, thump, whoosh, key, and the other words for them: `real-sfx-scripts.md`, Event kinds).
+- `hear`: `must-hear` (the ding, the click that matters) or `texture` (a rustle, steps).
+- `len`, `n`, `g` as needed: the sound's length in seconds, the keystrokes in a typing run, its loudness (1.0 = normal) (`real-sfx-scripts.md`).
 - `source`: `library` (the default: placed by Sound engineering), `clip` (the clip's own sound, path A) or `none` (a moment kept silent on purpose).
-- Once the user has heard and approved a recording for a moment: `file` (its full path), and as needed `role`, `slice`, `gain_db`, `pitch`, `fade_in`, `fade_out` (`scripts/sound_handoff.py` lists them). Every later run then uses that recording at that level.
+- `file` (the recording's full path), and as needed `role`, `slice`, `gain_db`, `pitch`, `fade_in`, `fade_out` (`real-sfx-scripts.md`, Settings): written at Sound engineering step 4 when an automatic pick doesn't fit, and at step 9 once the user has heard and approved a recording. Every later run then uses that recording at that level.
 
 Show the user the plan with the motion spec, as a list of moments and where each sound comes from.
 
@@ -105,7 +106,7 @@ The lessons behind these steps, and what failed, are in `types/live-action-story
 
 ## Sound engineering: placing effects with real-sfx
 
-Every library effect, in either path, is made here. The work is done by [real-sfx](https://github.com/Clipwing/skills/tree/main/skills/real-sfx) by Alexander Korbanov at Clipwing (MIT), kept as this skill's own copy: `<real-sfx>` below is its folder, `<skill>/real-sfx`. It picks real recordings from the user's own sound library, places each on its frame and writes the effects track. This skill decides which moments get a sound, checks each pick, sets the levels against the music and keeps the sources list; real-sfx's own `SKILL.md` is needed only for options this section doesn't cover.
+Every library effect, in either path, is made here. The work is done by the scripts of [real-sfx](https://github.com/Clipwing/skills/tree/main/skills/real-sfx) by Alexander Korbanov at Clipwing (MIT), kept in this skill's folder: `<real-sfx>` below is `<skill>/real-sfx`. They pick real recordings from the user's own sound library, place each on its frame and write the effects track. This skill decides which moments get a sound, checks each pick, sets the levels against the music and keeps the sources list. Read `real-sfx-scripts.md` before the first run: it says what each script prints and what to do about it, and has the event kinds, a kind real-sfx doesn't know, typing, searching the library, and a sound's settings and levels.
 
 **Set it up once per machine.** Its settings and what it learns go in `~/.config/real-sfx/`, never in its folder: the plugin installs each version of this skill in a new folder, so anything written there is left behind on the next update.
 
@@ -121,7 +122,7 @@ python3 <real-sfx>/scripts/setup.py init --library main="<the user's sound folde
 python3 <real-sfx>/scripts/setup.py check
 ```
 
-Run `. ~/.config/real-sfx/env.sh` in every shell that runs its scripts, and never use its `--remember` option (it writes into its folder). Ask the user where their sounds are; never point it at a folder they haven't named. The library is a folder of its own outside the project and outside any repository (on one film, `sfx-library/` beside the project folders); only the recordings a film uses are copied into its `assets/audio/effects/` (step 7). With no sound library yet, ask them to download recordings for the planned moments into such a folder first (sources below). The library's own `SOURCES.md` (one row per file with its licence) lets step 7 fill the project's rows. It needs ffmpeg with the `drawtext` and `rubberband` filters (on macOS, Homebrew's `ffmpeg-full`, first in `PATH`), and numpy for some of its scripts.
+Every shell starts without these settings, so every command that runs a real-sfx script starts with `. ~/.config/real-sfx/env.sh` (the command blocks below do). Without it the scripts read the plugin's own empty settings, and their advice to rebuild the index writes it into the plugin folder. Never use its `--remember` option (it writes into its folder). Ask the user where their sounds are; never point it at a folder they haven't named. The library is a folder of its own outside the project and outside any repository (on one film, `sfx-library/` beside the project folders); only the recordings a film uses are copied into its `assets/audio/effects/` (step 7). With no sound library yet, ask them to download recordings for the planned moments into such a folder first (sources below). The library's own `SOURCES.md` (one row per file with its licence) lets step 7 fill the project's rows. It needs ffmpeg with the `drawtext` and `rubberband` filters (on macOS, Homebrew's `ffmpeg-full`, first in `PATH`), and numpy for some of its scripts.
 
 **The steps,** from the project folder, with real-sfx's working files in `build/audio/sfx/`:
 
@@ -136,23 +137,25 @@ Run `. ~/.config/real-sfx/env.sh` in every shell that runs its scripts, and neve
 3. **Place them:**
 
    ```bash
+   . ~/.config/real-sfx/env.sh
    python3 <real-sfx>/scripts/from_hyperframes.py build/ --out build/audio/sfx/hf-moments.json --video output/cut-v3-silent.mp4
    python3 <real-sfx>/scripts/from_cues.py build/audio/sfx/events.json --video output/cut-v3-silent.mp4 --out build/audio/sfx/cues.json \
-     --ui library --no-stems --moments build/audio/sfx/hf-moments.json
+     --ui library --ui-pitch off --no-stems --moments build/audio/sfx/hf-moments.json   # plus any --kind (real-sfx-scripts.md)
    python3 <skill>/scripts/sound_handoff.py pins build/audio/sound-plan.json --cues build/audio/sfx/cues.json --out build/audio/sfx/pins.json
    python3 <real-sfx>/scripts/sheet.py apply build/audio/sfx/cues.json build/audio/sfx/pins.json
    ```
 
-   `output/cut-v3-silent.mp4` is the HyperFrames render before any sound is added; if the render has sound, make a silent copy first (`ffmpeg -i output/cut-v3.mp4 -an -c:v copy output/cut-v3-silent.mp4`). `from_hyperframes.py` reads every scene start and move out of the composition; `from_cues.py` then lists the strong picture moments that have no planned sound. Most are cuts and moves, which stay silent here. If one is a real thing on screen making a sound, ask the user before adding it to the plan. Read its `routes:` line and any "NOT mapped" kinds. `pins` and `sheet.py apply` put the plan's labels back (real-sfx names cues by kind) and pin the recordings the plan names, with the kind's role and the recording's own pitch; a planned moment real-sfx left quiet is reported, not pinned.
+   `output/cut-v3-silent.mp4` is the HyperFrames render before any sound is added; if the render has sound, make a silent copy first (`ffmpeg -i output/cut-v3.mp4 -an -c:v copy output/cut-v3-silent.mp4`). `from_hyperframes.py` reads every scene start and move out of the composition; `from_cues.py` then lists the strong picture moments that have no planned sound. Most are cuts and moves, which stay silent here. If one is a real thing on screen making a sound, ask the user before adding it to the plan. Read its `routes:` line and any "NOT mapped" kinds (`real-sfx-scripts.md`, What `from_cues.py` prints). `--ui-pitch off` keeps chimes and pops at their own pitch: real-sfx can't hear the music in a silent render, and would otherwise shift repeats out of tune with it. `pins` and `sheet.py apply` put the plan's labels back (real-sfx names cues by kind) and pin the recordings the plan names, with the kind's role and the recording's own pitch; a planned moment real-sfx left quiet is reported, not pinned. `pins` also flags a moment that got a uisfx sound because the library had nothing that fits: search the library and Openverse first (Path B, step 2).
 4. **Check every pick before anything is rendered:**
 
    ```bash
+   . ~/.config/real-sfx/env.sh
    python3 <real-sfx>/scripts/mix.py build/audio/sfx/cues.json --out build/audio/sfx/result/fx.mp4 --plan --no-loudnorm
    ```
 
-   Read the table: each file must fit its moment. Automatic picks can't be trusted with a small library: on one film they put a pop sound on a censor bleep, a censor beep and a 2.5 s bell on people joining a call, and swapped the calendar ding with the call's join chime, because those kinds share one role and real-sfx varies its picks across a film. A library file named only by a number isn't recognized by role (four trackpad clicks were indexed as "misc"), so search by folder or name (`<real-sfx>/scripts/search.py --query <words>`). Where a pick doesn't fit, write the right recording into the plan (`file`, and `role`, `slice` as needed) and go back to step 2. A `WARN slice ... holds two hits` means the piece holds two sounds: shorten it or ask the user.
+   Read the table: each file must fit its moment. Automatic picks can't be trusted with a small library: on one film they put a pop sound on a censor bleep, a censor beep and a 2.5 s bell on people joining a call, and swapped the calendar ding with the call's join chime, because those kinds share one role and real-sfx varies its picks across a film. A library file named only by a number isn't recognized by role (four trackpad clicks were indexed as "misc"), so search by folder or name (`real-sfx-scripts.md`, Finding a recording). Where a pick doesn't fit, write the right recording into the plan (`file`, and `role`, `slice` as needed) and go back to step 2. A `WARN slice ... holds two hits` means the piece holds two sounds: shorten it or ask the user.
 5. **Render the effects track:** the same `mix.py` command without `--plan`. `--no-loudnorm` keeps each sound at real-sfx's level for its role; the mix sets the film's loudness (step 8).
-6. **Check the timing:** `python3 <real-sfx>/scripts/verify.py build/audio/sfx/result/fx_resolved_cues.json build/audio/sfx/result/fx_sfx_track.wav` measures where each sound really lands. Any sound off its moment, or a clipping track, is fixed before going on.
+6. **Check the timing:** `. ~/.config/real-sfx/env.sh && python3 <real-sfx>/scripts/verify.py build/audio/sfx/result/fx_resolved_cues.json build/audio/sfx/result/fx_sfx_track.wav` measures where each sound really lands. Any sound off its moment, or a clipping track, is fixed before going on.
 7. **Bring it back:**
 
    ```bash
@@ -172,7 +175,7 @@ Run `. ~/.config/real-sfx/env.sh` in every shell that runs its scripts, and neve
 | Finds the moments itself (from the composition, the picture or a screen recording) and sounds most of them | Only the planned moments; its own list of moments is a check for missed sounds, never a source |
 | Interface sounds from its bundled uisfx pack (made by synthesis) | `--ui library`: real recordings first. Use uisfx only when the library and an Openverse search have nothing that fits and the user has heard it and agreed |
 | A small-sound layer (`texture.py`) and a dark bed (`bed.py`) under an effects-only film | Neither, unless the user asks: music or the clips' sound carries the film |
-| The film's loudness set to -14 LUFS | `--no-loudnorm`; loudness is set in the mix with the music and voice |
+| Its own film's loudness set to -14 LUFS | `--no-loudnorm`; the film's loudness is set in the mix with the music and voice (delivered at about -14 LUFS: `sound-and-voice.md`, Mix) |
 | A new MP4 with its sound | Only the effects track and the resolved cues are used; the film is mixed from stems |
 | Its critique and listening scores | Extra evidence; `sound_balance.py`, `check_sources.py` and the user's ears decide |
 | Remembers kinds and taste in its own folder | Its settings, index and taste live in `~/.config/real-sfx/`. A style learned with its `learn_style.py` is still written into its folder: copy it into `~/.config/real-sfx/styles/` |
@@ -204,7 +207,7 @@ Run `. ~/.config/real-sfx/env.sh` in every shell that runs its scripts, and neve
 
 ## Where sounds come from, and their licences
 
-Download sounds into the user's sound library folder (Sound engineering, above) or the project's own `assets/audio/`, never into a repository. Never commit downloaded sound files to a public repository, and never bundle them with a skill or template: Mixkit's and Pixabay's licences forbid sharing the files on their own, and a repository is sharing them. The uisfx pack inside the real-sfx skill is CC0, which is why it can ship with this plugin.
+Download sounds into the user's sound library folder (Sound engineering, above) or the project's own `assets/audio/`, never into a repository. Never commit downloaded sound files to a public repository, and never bundle them with a skill or template: Mixkit's and Pixabay's licences forbid sharing the files on their own, and a repository is sharing them. The uisfx pack in `real-sfx/vendor/` is CC0, which is why it can ship with this plugin.
 
 | Source | What it has | What its licence allows |
 |---|---|---|

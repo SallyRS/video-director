@@ -75,7 +75,7 @@ Make a contact sheet and read it, then check:
 - **Lines** stay in their home position and inside the title-safe area.
 - **Generated clips**: faces keep identity, hands don't warp, framing doesn't drift, and nothing moves by itself (a door swinging open with no hand on it). Props and clothes across shots are checked on the continuity sheets below, not by eye in passing.
 - **End card** against the type's close numbers (`types/<type>.md`).
-- **Sound**: music or a bed carries the film, quiet only on purpose; any effect lands on the frame of the real thing it belongs to; nothing on text; each effect and voice measured against the music (Sound balance, below); loudness about -14 LUFS, true peak -1 dBTP or lower (`sound-and-voice.md`, Mix).
+- **Sound**: music, or the clips' own sound, carries the film, quiet only on purpose; any effect lands on the frame of the real thing it belongs to; nothing on text; each effect and voice measured against the music (Sound balance, below); loudness about -14 LUFS, true peak -1 dBTP or lower (`sound-and-voice.md`, Mix).
 - **Motion rules**: holds are still (no drift or floating); nothing animates out before a scene change unless the film's style allows it; no bounce on text/interface moves; deliberate drawn-character acting allowed; no camera move repeated under two scene changes.
 - **Safe area**: nothing outside the format's safe box (`text-and-captions.md`), except what the type allows (a name bar, product UI, a legal line).
 - **The close** against the type's numbers (`types/<type>.md`).

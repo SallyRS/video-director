@@ -18,25 +18,34 @@ The scripts in `<skill>/real-sfx/scripts/` come from [real-sfx](https://github.c
 
 ## Event kinds
 
-The sound plan's `type` is one of these kinds or a word in brackets after it. With `--ui library` every kind takes a real recording from the user's library, in the role shown.
+The sound plan's `type` is one of these kinds or one of its other words. With `--ui library` every kind takes a real recording from the user's library, in the role shown.
 
-| Kind (other words for it) | What it gets |
-|---|---|
-| `click` (press, tap, button, select) | `click`: single clicks first, then the first click of a double-click recording |
-| `pop` (bubble, blip, appear) | `pop` (mouth pops only when the search names them) |
-| `tick`, `tock` | `click`, then short water drops |
-| `chime` (bell, ding, notify) | `chime` (bell, ring) |
-| `success` (ok, done, complete) | `chime` with the Ding tag |
-| `key` (keystroke, type, typing) | pieces of real typing recordings (Typing, below) |
-| `whoosh` (swoosh, swipe, slide, move, zoom, push, pan) | `whoosh`, its length from `len` |
-| `wipe` (transition, scene, cut) | a 0.7 s `whoosh`, 4 dB quieter |
-| `hit` (impact, slam, stamp, stinger, boom) | `hit` with a sharp attack |
-| `thump` (kick, bass_hit) | clean single foley hits (body, floor, wood), then a dark `hit` |
-| `riser` (build, swell, tension), `drop` (sub_drop) | `riser` of length `len` starting at `t`; `sub_drop` or a dark `hit` |
-| `glass` (crystal) / `shatter` (smash, break) | a ringing glass ping / breaking glass |
-| `magic` (sparkle, shimmer, glow, reveal) | `chime` with the word magic: sparkles, music box, harp |
-| `water` (drip, splash, droplet), `coins` (cash, money, purchase) | `water` drops of 0.1-0.7 s; `coin` |
-| `glitch`, `error`, `camera`, `paper`, `data`, `ambience` | the role of the same name |
+| Kind | Other words for it | What it gets |
+|---|---|---|
+| `click` | button, mouse, mouse_click, press, select, tap | `click`: single clicks first, then the first click of a double-click recording |
+| `pop` | appear, blip, bloop, bubble, plop | `pop` (mouth pops only when the search names them) |
+| `tick` | - | `click`, then short water drops |
+| `tock` | tack, tick_tock | `click`, then short water drops |
+| `chime` | bell, bleep, ding, notification, notify, ping | `chime` (bell, ring) |
+| `success` | complete, confirm, done, ok, win | `chime` with the Ding tag |
+| `error` | alert, buzz, denied, fail, warning, wrong | `error` |
+| `key` | key_press, keyboard, keypress, keystroke, type, typing | pieces of real typing recordings (Typing, below) |
+| `whoosh` | fly, flyby, move, pan, push, slide, sweep, swipe, swish, swoosh, zoom | `whoosh`, its length from `len` |
+| `wipe` | cut, page_turn, scene, scene_change, transition | a 0.7 s `whoosh`, 4 dB quieter |
+| `hit` | bang, boom, impact, punch, slam, slap, stamp, stinger, thud | `hit` with a sharp attack |
+| `thump` | bass_hit, kick, low_hit, sub_hit | clean single foley hits (body, floor, wood), then a dark `hit` |
+| `riser` | build, build_up, buildup, rise, sweep_up, swell, tension | `riser` of length `len`, starting at `t` |
+| `drop` | bass_drop, sub_drop, subdrop | `sub_drop`, then a dark `hit` of 1-3.5 s |
+| `glass` | crystal, glassy | a ringing glass ping |
+| `shatter` | break, glass_break, smash | breaking glass |
+| `magic` | fairy, glitter, glow, heal, reveal, shimmer, sparkle, twinkle | `chime` with the word magic: sparkles, music box, harp |
+| `water` | drip, drop_water, droplet, liquid, splash | `water` drops of 0.1-0.7 s |
+| `coins` | cash, cha_ching, coin, money, payment, purchase, register | `coin` |
+| `glitch` | datamosh, static, stutter | `glitch`, or a short piece of static |
+| `camera` | photo, shutter | `camera` |
+| `paper` | card, flip, page, receipt, sheet | `paper` |
+| `data` | compute, loading, processing, scan | `data` |
+| `ambience` | ambient, atmos, atmosphere, bed, drone, room | `ambience` |
 
 `sound_handoff.py events` reads the current list from `from_cues.py` itself and flags (exit 2) a `type` that isn't on it.
 

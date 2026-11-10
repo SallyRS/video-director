@@ -1,6 +1,6 @@
 # Sound and voice
 
-Sound is planned with the picture in the motion spec, not added at the end; how to make it, by kind of film, is in `sound-stage.md`. One coherent sound system per film: a score language, an emotional arc, an ambient bed, effects only where a real thing on screen makes a sound, and a voice direction.
+Sound is planned with the picture in the motion spec, not added at the end; how to make it, by kind of film, is in `sound-stage.md`. One coherent sound system per film: a score language, an emotional arc, an ambient bed only from the clips' own sound or the music (no library bed unless the user asks), effects only where a real thing on screen makes a sound, and a voice direction.
 
 ## Narration
 

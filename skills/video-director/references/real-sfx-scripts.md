@@ -1,6 +1,6 @@
 # real-sfx's scripts: what Sound engineering uses
 
-The scripts in `<skill>/real-sfx/scripts/` come from [real-sfx](https://github.com/Clipwing/skills/tree/main/skills/real-sfx) by Alexander Korbanov at Clipwing (MIT, `real-sfx/LICENSE`). `sound-stage.md`, Sound engineering, is the order of work; this file is the detail it points to: event kinds, unknown kinds, typing, searching the library, the settings a planned sound can carry, and what the scripts print. `<real-sfx>` below is `<skill>/real-sfx`. Run `. ~/.config/real-sfx/env.sh` first in every shell (Sound engineering, set-up).
+The scripts in `<skill>/real-sfx/scripts/` come from [real-sfx](https://github.com/Clipwing/skills/tree/main/skills/real-sfx) by Alexander Korbanov at Clipwing (MIT, `real-sfx/LICENSE`). `sound-stage.md`, Sound engineering, is the order of work; this file is the detail it points to: event kinds, unknown kinds, typing, searching the library, the settings a planned sound can carry, and what the scripts print. `<real-sfx>` below is `<skill>/real-sfx`. Every shell starts without real-sfx's settings, so every command below starts with `. ~/.config/real-sfx/env.sh` (Sound engineering, set-up). Without it the scripts read the plugin's own empty settings.
 
 ## Contents
 
@@ -27,7 +27,7 @@ The sound plan's `type` is one of these kinds or one of its other words. With `-
 | `tick` | - | `click`, then short water drops |
 | `tock` | tack, tick_tock | `click`, then short water drops |
 | `chime` | bell, bleep, ding, notification, notify, ping | `chime` (bell, ring) |
-| `success` | complete, confirm, done, ok, win | `chime` with the Ding tag |
+| `success` | complete, confirm, done, ok, win | `chime` |
 | `error` | alert, buzz, denied, fail, warning, wrong | `error` |
 | `key` | key_press, keyboard, keypress, keystroke, type, typing | pieces of real typing recordings (Typing, below) |
 | `whoosh` | fly, flyby, move, pan, push, slide, sweep, swipe, swish, swoosh, zoom | `whoosh`, its length from `len` |
@@ -60,7 +60,7 @@ An unknown kind stays quiet and is listed as "NOT mapped". Say what it is on the
 --one-source thump,pop                       one physical object (a ball, steps): one family of recordings, takes in turn
 ```
 
-Never use `--remember`: it writes into `<real-sfx>/`, which the next plugin update replaces. Write the `--kind` into the build log so the next run uses it too.
+Never use `--remember`: it writes into `<real-sfx>/`, which the next plugin update replaces. Write the `--kind` into the build log so the next run uses it too, with the full path of each recording behind a `slices:` id: ids change when the index is rebuilt, so look them up again then (`search.py --query <file name> --paths`).
 
 ## Typing
 
@@ -70,7 +70,7 @@ A `key` moment with `len` (seconds) and `n` (characters) becomes separate real k
 
 Read these lines every run and act on them before step 4:
 
-- `routes: click -> library:click ...`: where each kind went. Every kind should say `library`.
+- `routes: click -> library:click ...`: where each kind went. Every kind should say `library`. `uisfx:` means the library had nothing that fits and a made sound was taken; `sound_handoff.py pins` flags it.
 - `NOT mapped` and `declared N events: M voiced, K silent`: kinds left quiet (above).
 - `WARN sync: the list is consistently ±X s from the picture`: the plan's times are offset. Fix the plan's times (the plan is final film time), don't use `--shift`.
 - `VERDICT: the cue list and this render come from different cuts`: the plan or the render is out of date. Retime the plan (`build-and-qa.md`, Retiming) or use the render it was written for.
@@ -82,16 +82,17 @@ Running `from_cues.py` again rebuilds the cue sheet from scratch, so `pins` and 
 ## Finding a recording in the library
 
 ```
+. ~/.config/real-sfx/env.sh
 python3 <real-sfx>/scripts/search.py --query "trackpad|mouse" --role click --paths     # name or folder; a|b = either
-python3 <real-sfx>/scripts/search.py --role chime --says "ding|bell" --max-dur 1.2 --sheet build/audio/sfx/chimes.png
+python3 <real-sfx>/scripts/search.py --role chime --says "bright short" --max-dur 1.2 --sheet build/audio/sfx/chimes.png
 python3 <real-sfx>/scripts/search.py --role whoosh --like 412 --target-dur 0.7          # like recording 412, near 0.7 s
 python3 <real-sfx>/scripts/listen.py onsets <file>                                        # the separate sounds inside one recording
 ```
 
-- `--query` matches the file and folder name; `--says` matches plain words for the sound and its tags; `--paths` prints each file's path, tags and source recording.
+- `--query` matches the file and folder name. `--says` needs every word to be in the sound's measured description: punchy, soft-attack, dark, bright, warm, thin, heavy, short, long, long-tail, tonal, noisy, airy, dry. `--paths` prints each file's path and source recording.
 - `--sheet` draws each candidate's waveform and spectrogram with its id. Choose by what moves and what it hits: paper is paper, a bead on a string is a plastic click.
 - A length with `*` (`0.36*`) is the audible part; the rest of the file is silence.
-- Library names can be wrong (a pack's "Game Select" is tagged as an animal). Check the tags with `--paths` before taking a sound.
+- Library names can be wrong. Look at the `--sheet` picture and the folder before taking a sound. (Sound tags from a model come only with `listen.py install` and `tag-index`, which this skill doesn't run.)
 - Write the chosen recording into the plan as `file` (its full path), not the search id: ids change when the index is rebuilt.
 
 ## Settings a planned sound can carry
@@ -122,21 +123,24 @@ Each role is brought to a peak level (hit -4, whoosh -9, riser -12, chime -13, c
 
 Clicks, pops and other short sounds land on `t` by their start. Hits, whooshes, chimes and other sounds placed by their peak are placed by their arrival when they get loud fast (the first 60 ms within 6 dB of their loudest), and by their peak when they build to a climax, such as a riser. A quiet lead-in before a sound is skipped. Set `anchor` in the plan only when the user hears a sound early or late.
 
-`verify.py` measures where each judged sound lands on the track and exits 1 when one is off by more than 40 ms (whooshes, risers and long textures get a wider margin) or the track clips. `MISSING` means the render lost a sound: render again. Its `mono:` line says how many dB the track loses on a phone speaker (0 is equal channels; 6 or more means something cancels). To look closely at one moment: `python3 <real-sfx>/scripts/zoom.py <resolved> <track> --at <seconds> --span 3 --video <render>` draws the frames, each cue and the waveform in one picture.
+`verify.py` measures where each judged sound lands on the track and exits 1 when one is off by more than 40 ms (whooshes, risers and long textures get a wider margin) or the track clips. `MISSING` means the render lost a sound: render again. Its `mono:` line says how many dB the track loses on a phone speaker (0 is equal channels; 6 or more means something cancels). To look closely at one moment: `. ~/.config/real-sfx/env.sh && python3 <real-sfx>/scripts/zoom.py <resolved> <track> --at <seconds> --span 3 --video <render>` draws the frames, each cue and the waveform in one picture.
 
 ## Editing the cue sheet
 
 For a quick try before the user listens (the plan keeps anything approved, and the next run of step 2 rebuilds the sheet from it):
 
 ```
+. ~/.config/real-sfx/env.sh
 python3 <real-sfx>/scripts/sheet.py show build/audio/sfx/cues.json
-python3 <real-sfx>/scripts/sheet.py set build/audio/sfx/cues.json --at 7.25 gain_db=-3 file=<path>
+python3 <real-sfx>/scripts/sheet.py set build/audio/sfx/cues.json --at 7.25 file=<path> role=chime label="calendar ding" gain_db=-3
 python3 <real-sfx>/scripts/sheet.py drop build/audio/sfx/cues.json --at 7.25
 ```
 
-`--at` names a cue by its time; add `--label` when two cues share it. `set` replaces the automatic pick with `file=`, and `--unset <field>` removes a setting. A cue keeps the label of its kind ("whoosh x0.25") when its recording changes by hand, so set `label=` too, or reports name the wrong moment.
+`--at` names a cue by its time; add `--label` when two cues share it. `file=` replaces the automatic pick, and the role goes with it, so always set `role=` too: the role sets the sound's level and which point lands on the frame. A cue also keeps the label of its kind ("whoosh x0.25"), so set `label=`, or reports name the wrong moment. `--unset <field>` removes a setting.
 
 ## Library set-up
+
+Run each with `. ~/.config/real-sfx/env.sh &&` in front.
 
 - `setup.py scan <folder>`: which folders look like sound libraries.
 - `setup.py add-library <name> <folder> --index`: add another library (`--tier extra` for a fallback library, used only when the main one has fewer than three fitting sounds).

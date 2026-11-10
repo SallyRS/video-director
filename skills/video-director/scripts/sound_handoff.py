@@ -20,7 +20,7 @@ makes a sound, nothing else.
   t       film seconds: the first frame of the event (not the frame after it)
   label   what happens on screen, in words; it names the sound in every report
   type    real-sfx's event kind (click, pop, chime, success, hit, thump, whoosh, key, ...: references/real-sfx-scripts.md)
-  hear    must-hear (the ding, the click that matters) or texture (a rustle, steps, a room)
+  hear    must-hear (the ding, the click that matters) or texture (a rustle, steps)
   source  library (default: real-sfx places a real recording), clip (the clip's own sound, path A), or none
   len, g, n   passed to real-sfx as they are (length in seconds, loudness 1.0 = nominal, keystrokes in a run)
   file    optional: the recording to use (absolute path), once the user has heard and chosen one
@@ -31,10 +31,11 @@ makes a sound, nothing else.
           own pitch unless the plan gives one
 
 events   writes real-sfx's typed event list with the library moments only, and checks the plan against this
-         skill's effects rules (few sounds, none on text or the logo).
+         skill's effects rules (few sounds, none on text or the logo, no background bed).
 pins     after real-sfx's from_cues.py: a batch for its `sheet.py apply` that gives every placed cue its label from
          the plan and, where the plan names one, its recording (from_cues.py names cues by kind and picks recordings
-         by itself). A moment real-sfx left quiet is reported, not pinned.
+         by itself). A moment real-sfx left quiet is reported, not pinned; a uisfx sound the plan didn't choose is
+         flagged.
 collect  after real-sfx's mix.py: copies its effects track to build/audio/effects.wav, writes
          build/audio/events.json for sound_balance.py from the plan, copies every recording it placed into
          assets/audio/effects/ with a row in assets/audio/SOURCES.md (source and licence taken from the library's own
@@ -129,6 +130,10 @@ def cmd_events(a) -> int:
         if e["source"] == "library" and str(e["type"]).lower() not in words:
             review.append(f"kind     {e['t']:.2f} {e['label']}: real-sfx doesn't know the kind '{e['type']}' and will "
                           f"leave it quiet; use one of its kinds or pass --kind {e['type']}=<kind> to from_cues.py")
+        elif e["source"] == "library" and words.get(str(e["type"]).lower()) == "ambience":
+            review.append(f"bed      {e['t']:.2f} {e['label']}: an ambience kind; real-sfx loops it under the scene, and "
+                          "this skill adds no background bed unless the user asked for one. Use the clips' own sound "
+                          "or the music, or confirm with the user")
     if len(lib) > 5:
         review.append(f"count    {len(lib)} library effects planned: most motion-design films need fewer than five. "
                       "Check each is a real thing on screen making a sound, and tell the user the count")
@@ -181,6 +186,11 @@ def cmd_pins(a) -> int:
         taken.add(i)
         c = cues[i]
         sets = {"label": e["label"]}
+        if c.get("uisfx") and not e.get("file"):
+            review.append(f"uisfx    {e['t']:.2f} {e['label']}: the library had nothing that fits, so real-sfx took "
+                          f"uisfx '{c['uisfx']}', a sound made by synthesis. Search the library and Openverse first; use "
+                          "it only if the user has heard it beside the closest real recording and agreed, then put "
+                          "its path in the plan as \"file\"")
         if e.get("file"):
             sets["file"] = str(Path(e["file"]).expanduser())
             # a named recording drops real-sfx's automatic pick and with it the role, which sets the sound's level
@@ -278,6 +288,9 @@ def placed_file(cue: dict) -> tuple[Path | None, bool]:
     if cue.get("source") == "uisfx" or cue.get("uisfx"):
         f = cue.get("file") or cue.get("source_file")
         return (Path(f) if f else None), True
+    named = cue.get("source_file") or cue.get("file")
+    if named and "/node_modules/uisfx/" in str(named).replace("\\", "/"):
+        return Path(named), True        # a uisfx sound the plan named by its path
     for k in ("source_file", "slice_of", "file"):
         f = cue.get(k)
         if f and "/_work/" not in str(f).replace("\\", "/"):
@@ -405,6 +418,12 @@ def cmd_collect(a) -> int:
     for c in extra:
         review.append(f"extra    {float(c.get('t', 0)):.2f} {c.get('label') or c.get('role', '?')}: a sound nobody "
                       "planned; drop it (sheet.py drop --at T) or add the moment to the plan with the user's OK")
+    for i, got in owned.items():
+        for c in got:
+            if placed_file(c)[1] and not plan[i].get("file"):
+                review.append(f"uisfx    {float(c.get('t', 0)):.2f} {plan[i]['label']}: a uisfx sound (made by "
+                              "synthesis) that the plan doesn't name; replace it with a real recording, or name it "
+                              "in the plan as \"file\" once the user has heard it and agreed")
 
     # events.json for sound_balance.py: the planned moments in the effects stem, at the time real-sfx placed them
     events = []

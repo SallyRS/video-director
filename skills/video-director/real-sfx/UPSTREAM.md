@@ -18,7 +18,7 @@ request when there is anything new.
 | Clipwing's files | Here | When Clipwing changes them |
 |---|---|---|
 | `scripts/` (all but `package.py`), `tests/selftest.py`, `tests/resound.py`, `vendor/`, `config.json`, `config.example.json`, `references/profiles/` | kept, in the same places: the scripts find their settings, the uisfx pack and the profiles through this folder | applied here, keeping the changes listed below |
-| `SKILL.md`, `README.md`, `references/*.md`, `tests/resound.md`, any other `.md` file | removed: their instructions were for real-sfx as a skill on its own | listed for a person to review, never copied in. Fold anything Video Director needs into `references/real-sfx-scripts.md` or `references/sound-stage.md`, in Video Director's own words and defaults |
+| `SKILL.md`, `README.md`, `references/*.md`, `tests/resound.md`, any other `.md` file outside `vendor/` | removed: their instructions were for real-sfx as a skill on its own | listed for a person to review, never copied in. Fold anything Video Director needs into `references/real-sfx-scripts.md` or `references/sound-stage.md`, in Video Director's own words and defaults |
 | `evals/` | removed: real-sfx's own trigger and output tests | listed for review, never copied in |
 | `scripts/package.py` | removed: it packaged real-sfx as a skill of its own | listed for review, never copied in |
 

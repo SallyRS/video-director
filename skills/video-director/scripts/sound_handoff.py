@@ -19,7 +19,7 @@ makes a sound, nothing else.
 
   t       film seconds: the first frame of the event (not the frame after it)
   label   what happens on screen, in words; it names the sound in every report
-  type    real-sfx's event kind (click, pop, chime, success, hit, thump, whoosh, key, ...: its typed-cues list)
+  type    real-sfx's event kind (click, pop, chime, success, hit, thump, whoosh, key, ...: references/real-sfx-scripts.md)
   hear    must-hear (the ding, the click that matters) or texture (a rustle, steps, a room)
   source  library (default: real-sfx places a real recording), clip (the clip's own sound, path A), or none
   len, g, n   passed to real-sfx as they are (length in seconds, loudness 1.0 = nominal, keystrokes in a run)
@@ -495,12 +495,12 @@ def main() -> int:
     e.add_argument("plan", type=Path)
     e.add_argument("--out", type=Path, required=True)
     e.add_argument("--duration", type=float, help="the film's length in seconds, to catch times outside it")
-    e.add_argument("--real-sfx", type=Path, help="real-sfx's skill folder (default: real-sfx/ in this skill's folder)")
+    e.add_argument("--real-sfx", type=Path, help="real-sfx's folder (default: real-sfx/ in this skill's folder)")
     pn = sub.add_parser("pins", help="real-sfx's cue sheet -> labels and named recordings for sheet.py apply")
     pn.add_argument("plan", type=Path)
     pn.add_argument("--cues", type=Path, required=True, help="the cue sheet from_cues.py wrote")
     pn.add_argument("--out", type=Path, required=True)
-    pn.add_argument("--real-sfx", type=Path, help="real-sfx's skill folder (default: real-sfx/ in this skill's folder)")
+    pn.add_argument("--real-sfx", type=Path, help="real-sfx's folder (default: real-sfx/ in this skill's folder)")
     c = sub.add_parser("collect", help="real-sfx's results -> effects.wav, events.json, effects/ and SOURCES.md")
     c.add_argument("plan", type=Path)
     c.add_argument("--resolved", type=Path, required=True, help="real-sfx's <stem>_resolved_cues.json")

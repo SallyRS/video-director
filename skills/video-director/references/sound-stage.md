@@ -48,7 +48,7 @@ At stage 7, write `build/audio/sound-plan.json` from the motion spec: one entry 
 
 - `t`: film seconds, the first frame of the event (from the composition's own times where it has them: a press at 0.9 s in a scene starting at 20.25 s is 21.15).
 - `label`: what happens on screen. It names the sound in every report and in `SOURCES.md`.
-- `type`: real-sfx's kind of event (click, pop, chime, success, hit, thump, whoosh, key, and their synonyms: the real-sfx skill's `references/typed-cues.md`).
+- `type`: real-sfx's kind of event (click, pop, chime, success, hit, thump, whoosh, key, and the other words for them: `real-sfx-scripts.md`, Event kinds).
 - `hear`: `must-hear` (the ding, the click that matters) or `texture` (a rustle, steps, a room).
 - `source`: `library` (the default: placed by Sound engineering), `clip` (the clip's own sound, path A) or `none` (a moment kept silent on purpose).
 - Once the user has heard and approved a recording for a moment: `file` (its full path), and as needed `role`, `slice`, `gain_db`, `pitch`, `fade_in`, `fade_out` (`scripts/sound_handoff.py` lists them). Every later run then uses that recording at that level.
@@ -105,7 +105,7 @@ The lessons behind these steps, and what failed, are in `types/live-action-story
 
 ## Sound engineering: placing effects with real-sfx
 
-Every library effect, in either path, is made here. The work is done by [real-sfx](https://github.com/Clipwing/skills/tree/main/skills/real-sfx) by Alexander Korbanov at Clipwing (MIT), kept as this skill's own copy: `<real-sfx>` below is its folder, `<skill>/real-sfx`. It picks real recordings from the user's own sound library, places each on its frame and writes the effects track. This skill decides which moments get a sound, checks each pick, sets the levels against the music and keeps the sources list; real-sfx's own `SKILL.md` is needed only for options this section doesn't cover.
+Every library effect, in either path, is made here. The work is done by the scripts of [real-sfx](https://github.com/Clipwing/skills/tree/main/skills/real-sfx) by Alexander Korbanov at Clipwing (MIT), kept in this skill's folder: `<real-sfx>` below is `<skill>/real-sfx`. They pick real recordings from the user's own sound library, place each on its frame and write the effects track. This skill decides which moments get a sound, checks each pick, sets the levels against the music and keeps the sources list. For anything these steps don't spell out (event kinds, a kind real-sfx doesn't know, typing, searching the library, a sound's settings and levels, what the scripts print), read `real-sfx-scripts.md`.
 
 **Set it up once per machine.** Its settings and what it learns go in `~/.config/real-sfx/`, never in its folder: the plugin installs each version of this skill in a new folder, so anything written there is left behind on the next update.
 
@@ -204,7 +204,7 @@ Run `. ~/.config/real-sfx/env.sh` in every shell that runs its scripts, and neve
 
 ## Where sounds come from, and their licences
 
-Download sounds into the user's sound library folder (Sound engineering, above) or the project's own `assets/audio/`, never into a repository. Never commit downloaded sound files to a public repository, and never bundle them with a skill or template: Mixkit's and Pixabay's licences forbid sharing the files on their own, and a repository is sharing them. The uisfx pack inside the real-sfx skill is CC0, which is why it can ship with this plugin.
+Download sounds into the user's sound library folder (Sound engineering, above) or the project's own `assets/audio/`, never into a repository. Never commit downloaded sound files to a public repository, and never bundle them with a skill or template: Mixkit's and Pixabay's licences forbid sharing the files on their own, and a repository is sharing them. The uisfx pack in `real-sfx/vendor/` is CC0, which is why it can ship with this plugin.
 
 | Source | What it has | What its licence allows |
 |---|---|---|

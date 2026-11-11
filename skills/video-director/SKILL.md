@@ -155,7 +155,7 @@ More: `references/options-rounds.md`.
 
 ### 6. Storyboard
 
-Design every scene: a start frame and an end frame, plus an in-between frame whenever the change can't be pictured from the two ends. Use the frame kit (`references/frame-kit.md`) with `BRAND.size` set to the format; the renderer reads it and renders at that size. Render, read the check output, fix, then build the page. Before drawing a scene, run the beat method in `references/visual-ideas.md` (section 3) on its key line.
+Design every scene: a start frame and an end frame, plus an in-between frame whenever the change can't be pictured from the two ends. Use the frame kit (`references/frame-kit.md`) with `BRAND.size` set to the format; the renderer reads it and renders at that size. Render, read the check output, fix, then build the page. Before drawing a scene, run the beat method in `references/visual-ideas.md` (section 3) on its key line. Plan generated people and products with `references/generated-clips.md` before counting clips.
 
 ```bash
 python3 <skill>/scripts/render_frames.py storyboard/frames.html --all --out storyboard/frames-v0.3
@@ -297,6 +297,7 @@ Before sending any page or render, go through every frame against `references/pr
 | `references/motion-spec.md` | Stage 7: scene length, house settings, named moves, spec format |
 | `references/text-treatments.md` | Choosing how text looks and moves: the treatments seen in strong films, with sizes and timings |
 | `references/media.md` | Making images, clips and logos; prompting; casting; checking generated media |
+| `references/generated-clips.md` | Stage 6 and every clip prompt with generated people or products: actions that fail, cuts, continuity; clips that keep failing |
 | `references/reference-films.md` | Stage 3, when the user chose reference videos: how to study a film; general techniques |
 | `references/build-and-qa.md` | Stages 8-9: HyperFrames build, retiming, cutdowns, render checks, blind comparison with a reference |
 | `references/polish-rounds.md` | Stage 10: reading timestamped notes, rounds and renders, checks against user choices, choppiness the check missed, the ideas pass |

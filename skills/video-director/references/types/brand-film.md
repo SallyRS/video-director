@@ -68,6 +68,7 @@ One transition type for the whole film. With footage, the hard cut is that type,
 - **Keep full-frame generated faces and clips short** (about 2-3 s). Keep the motion in the type and the transition, not in the face.
 - **Clips where faces are absent or small**: hands and tools, sparks, water, weather, rooms from behind, silhouettes, top-down work. Avoid speech, crowds, sports, long close-ups of precise handwork, and any text on a surface.
 - **One grade and one grain over everything**, applied in the build, hides seams between generated and supplied material.
+- Plan every generated person shot with `../generated-clips.md`: the actions clip models get wrong, cuts, and continuity before generating.
 - **What reads as filmed**: a specific person in a specific place doing a specific task; clutter and imperfection; a camera position with a point of view; practical light with color. Put these in every image brief.
 - **A film of stills falls into a slideshow when every still gets the same slow push.** Hold stills still and let the type and the transition move.
 

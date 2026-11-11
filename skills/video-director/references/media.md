@@ -48,7 +48,7 @@ Run stills on GPT 6.1 Sol at high effort, as above. If the user's Codex plan doe
 **Brief rules**
 - Editorial, natural skin texture, soft window light, shallow depth of field, calm natural color, not stock photography.
 - A neutral seamless backdrop for people who will be cut out or framed; a real setting for b-roll.
-- State each person's age, gender, ethnicity, role, clothing and expression. Cast deliberately diverse people across the film.
+- State each person's description (`generated-clips.md`, section 3), role and expression. Cast deliberately diverse people across the film.
 - For the same person in several images, give the first image as the reference and say "THE SAME person (same face, hair, clothing)".
 - Put the palette's hex values in the brief so plates match the frames, and say where to leave empty space for type.
 - No text, no logos, no watermarks, no props that read as brands.
@@ -57,11 +57,13 @@ Run stills on GPT 6.1 Sol at high effort, as above. If the user's Codex plan doe
 
 ## Prompting clips
 
+Plan each shot of a person or product with `generated-clips.md` first: which actions fail, how cuts hold, continuity before generating.
+
 - **Director's formula**: cinematography (shot size, lens, camera move), subject, action, context, style and ambiance. Dialogue in quotes, effects with an `SFX:` prefix, ambient noise named.
 - **One style descriptor, pasted word for word into every clip prompt** (medium, palette with hex values, line and material, texture, lighting, realism), plus a style-key image: an abstract swatch for faceless films, a character sheet for a recurring character.
 - **One clip holds one location and one action.** Replace mood words ("cinematic", "stunning") with their visual causes.
-- **Continuity across clips**: repeat the same 3-6 visual attributes of each person and place verbatim in every prompt; use reference images ("ingredients") of each character, place and prop.
-- **First-and-last-frame** generation gives a controlled move between two approved stills; use it when a generated clip must join a designed scene, with the last frame matching the next scene so the join is a match cut. For a person's action, prefer a start frame only: on one film, clips given both a start and an end frame made the person jump to another place mid-clip, and start-frame-only clips were clean.
+- **Continuity across clips**: repeat each person's description (`generated-clips.md`, section 3) and the same 3-6 visual attributes of each place verbatim in every prompt; use reference images ("ingredients") of each character, place and prop.
+- **First-and-last-frame** generation gives a controlled move between two approved stills; use it when a generated clip must join a designed scene, with the last frame matching the next scene so the join is a match cut. For a person's action, prefer a start frame only: on one film, clips given both a start and an end frame made the person jump to another place mid-clip, and start-frame-only clips were clean. When a person or product clip needs an end frame, make it as an edit of the approved start frame, never as a new image (`generated-clips.md`, section 3); a clip joining a designed scene ends on that scene's frame.
 - **A reference image shows the clip's target look.** A frame from before a change (the earlier outfit, a door still open) pulls the clip back to that state; references of the approved outfit, the face or a prop are fine.
 - **Timestamp prompting** puts 2-4 shots in one 8-second generation.
 - Known limits: glasses and hands change between frames, on-screen text from the video model is unusable, characters drift across separate clips. Treat first generations as rehearsals.
@@ -84,7 +86,7 @@ Action clip (a person doing something), with the character's approved reference 
 cd <project>/assets/video && higgsfield generate create seedance_2_0 --start-image ../images/<scene-still>.png \
   --image-references ../images/<character-front>.png --image-references ../images/<character-full>.png \
   --aspect_ratio 16:9 --duration 5 --resolution 1080p --generate_audio false --mode std \
-  --prompt "<shot size, lens, camera>. <the character description, pasted word for word>. <one action, start to finish, saying who moves each object>. <the place>. <light>."
+  --prompt "<shot size, lens, camera>. <the character description, pasted word for word>. <where they are in the frame and which way they look>. <one action, start to finish, saying who moves each object; they breathe>. <the place>. <the scene's light line, word for word>. <where the light falls in this shot>."
 ```
 
 In a live-action story ad, or a film whose brief says its people's own sound is heard, make the clip with its sound: `--generate_audio true`, add `--genre comedy` for a comedy, and end the prompt with "Sound: only the natural sound of what is on screen, no speech, no music." (or the character's line in quotes, when they speak in this clip). The steps that follow are in `sound-stage.md`, path A.
@@ -96,7 +98,7 @@ Download the result URL it prints into `assets/video/`. Check model names with `
 - When a clip must join a designed scene, generate it with first and last frames so the join is a match cut.
 - Each hero clip only needs 1-2 seconds on screen; trim in the build.
 
-**Check every clip before using it,** and, in a film with recurring people, places or props, its start still against `build/continuity.json` before generating it (`build-and-qa.md`, Continuity sheets). Pull frames (one per 0.25 s) and look for: the face changing identity, hands or fingers warping or multiplying, props changing size or disappearing, objects passing through each other, framing drift, anything appearing before its cause, an object moving with nothing moving it. Video models also add their own camera cuts inside long clips: find them as spikes in the difference between one frame and the next (`ffmpeg -i clip.mp4 -vf "select='gt(scene,0.3)',showinfo" -f null - 2>&1 | grep pts_time`), and use only takes, or parts of takes, without them. Regenerate rather than send a flawed clip with a note. Look at stills and clips full size, in motion, as a skeptical stranger would. If a shot comes back "looks fake" twice, recommend a different approach (a designed frame, a different shot) instead of a third try.
+**Check every clip before using it,** and, in a film with recurring people, places or props, its start still against `build/continuity.json` before generating it (`build-and-qa.md`, Continuity sheets). Trim its ends first (`generated-clips.md`, section 2), then pull frames (one per 0.25 s) and look for: the face changing identity, hands or fingers warping or multiplying, props changing size or disappearing, objects passing through each other, framing drift, anything appearing before its cause, an object moving with nothing moving it. Video models also add their own camera cuts inside long clips: find them as spikes in the difference between one frame and the next (`ffmpeg -i clip.mp4 -vf "select='gt(scene,0.3)',showinfo" -f null - 2>&1 | grep pts_time`), and use only takes, or parts of takes, without them. Regenerate rather than send a flawed clip with a note. Look at stills and clips full size, in motion, as a skeptical stranger would. If a shot comes back "looks fake" twice, recommend a different approach (a designed frame, a different shot) instead of a third try; `generated-clips.md`, section 4, turns the note into a cause and lists the ways to change the shot.
 
 ## Without Higgsfield
 
@@ -129,7 +131,7 @@ Use the user's own photos, or images from another image tool the user runs: writ
 
 ## The cast
 
-People are a brief decision: real-looking people, illustrated characters, hands only, or faceless. When people appear, keep a cast list in `direction-notes.md`: name, role, how they look, image files. Use the same face for the same name everywhere. Describe faces by what is visible (hair, clothing, expression, age range), not by naming features. Names on screen come from the script or the user's demo data; ask before using any real client name.
+People are a brief decision: real-looking people, illustrated characters, hands only, or faceless. When people appear, keep a cast list in `direction-notes.md`: name, role, how they look, image files. Use the same face for the same name everywhere. In the cast list, describe faces by what is visible (hair, clothing, expression, age range); the description pasted into prompts follows `generated-clips.md`, section 3. Names on screen come from the script or the user's demo data; ask before using any real client name.
 
 For full-frame generated portraits in brand films, see `types/brand-film.md` (one set, locked crop, short holds). Recaps of real events need real footage.
 

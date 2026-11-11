@@ -13,6 +13,7 @@ For every note with a time in it:
 2. Say back the moment by what is on screen, not by its time alone: "at 0:47, the share sheet closes and the client's approval arrives". Then say what you will change.
 3. When a word in the note could mean a line of text or an object on screen, say which one you took it to mean. "Call" can be the word "call" in a line or a person's "calling" chip; "1" can be option 1 or look A. Times can also be off by a second or two, so match the note to the nearest moment that fits it.
 4. If the frames don't show what the note describes, ask in one line before changing anything.
+5. A note on a generated clip ("looks fake", "looks like AI") is turned into something visible in the frames and fixed in the order in `generated-clips.md`, section 4.
 
 Answer every note in a numbered list, in the user's order, before rendering again.
 

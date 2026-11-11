@@ -10,7 +10,7 @@ The numbers below come from three films measured for one project (Logitech "An U
 
 - **The situation in one sentence**, with the character, the place and the time pressure ("back from the gym at 9:58 with a call at 10").
 - **The character**: age, look, clothes at the start and any change of clothes, and whether they speak (an AI voice, a real voice actor) or think in voiceover.
-- **The clip tool and a rough budget.** Generated clips often need two or three tries, so budget two to three generations per person shot. In the brief, give a rough figure from the script's likely shot count; run `higgsfield generate cost` with the action-clip flags in `../media.md` for one typical clip (a 5 s, 1080p Seedance clip estimated 60 credits on 2 November 2026), and check the balance with `higgsfield account status`. After the storyboard is approved (stage 6), count the person shots, give a firm estimate the same way, and get the user's OK before generating. Write both in `brief.md`.
+- **The clip tool and a rough budget.** Generated clips often need two or three tries, so budget two to three generations per person shot. In the brief, give a rough figure from the script's likely shot count; run `higgsfield generate cost` with the action-clip flags in `../media.md` for one typical clip (a 5 s, 1080p Seedance clip estimated 60 credits on 2 November 2026), and check the balance with `higgsfield account status`. After the storyboard is approved (stage 6), count the person shots, with hard shots already split (`../generated-clips.md`, section 1), give a firm estimate the same way, and get the user's OK before generating. Write both in `brief.md`.
 - **The product moment**: what the person does with the product, and the real app or product it shows. A software product needs a screen recording of the real app.
 - **The swear, the gag, anything a platform might refuse**: decide bleeps and cuts for paid placements now.
 
@@ -31,7 +31,7 @@ The numbers below come from three films measured for one project (Logitech "An U
    - Approve the character as stills first: one front portrait and one full-body shot, in each outfit the film uses. These are the references for every clip.
    - When the user asks for a test still before a clip ("see if you get it right"), send it and stop until they OK it. Show it beside the target shot at the same crop, and judge the cut and length of the clothes, not only their color and type: a "short top" still once came back as a sports bra when the user meant the crop top from a later scene, and the clip and the cut had to be redone.
    - A reference image shows things as they should look in this clip, never a frame from before a change (`../media.md`, Prompting clips).
-   - Start each clip from an approved still of that scene (image-to-video), and paste the same character description word for word into every clip prompt: face, hair, build, clothes, and any change (a shirt pulled on in scene 4 stays on after it).
+   - Start each clip from an approved still of that scene (image-to-video), and paste the same character description (`../generated-clips.md`, section 3) word for word into every clip prompt, with any change (a shirt pulled on in scene 4 stays on after it).
    - Check each clip against the reference stills for identity drift (face, hair, glasses, hands) before using it. Regenerate drifted clips.
    - If the clip tool offers a trained character reference (Higgsfield `soul-id`), check whether the chosen video model accepts it before relying on it.
    - The same goes for every recurring prop and anything whose state matters (the bottle she carries, the door she shut, the laptop lid): name each in the storyboard, describe it the same way in every clip prompt that shows it, and list it on the continuity sheet (`../build-and-qa.md`). Check each new clip's start still against the sheet before generating.
@@ -42,6 +42,7 @@ The numbers below come from three films measured for one project (Logitech "An U
 5. **Show the result on the person.** The turn and the payoff show the product working on the character, not a narrator saying it does. A film that only talks about the feature needs a long claim close to explain it.
 6. **The gag needs its setup.** Whatever the payoff reveals (the part left unfixed, the reaction) is planted earlier in the film.
 7. **The person does one thing per shot.** One clip holds one location and one action. Use the sound-on action-clip command in `../sound-stage.md` (path A, step 1) with the character's reference stills, not the living-portrait command: a locked-off "subtle" prompt returns a near-still clip.
+8. **Plan every clip with `../generated-clips.md` before writing its prompt**: the actions clip models get wrong and how to split them, sides of the frame and light that hold across cuts, the empty room first, end frames made as edits, and two people talking.
 
 ## Look decisions (stage 5)
 

@@ -66,7 +66,7 @@ The lessons behind these steps, and what failed, are in `types/live-action-story
    cd <project>/assets/video && higgsfield generate create seedance_2_0 --start-image ../images/<scene-still>.png \
      --image-references ../images/<character-front>.png --image-references ../images/<character-full>.png \
      --aspect_ratio <the film's shape, e.g. 16:9> --duration 5 --resolution 1080p --generate_audio true --mode std --genre comedy \
-     --prompt "<shot size, lens, camera>. <the character description, pasted word for word>. <one action, start to finish, saying who moves each object>. <the place>. <light>. Sound: only the natural sound of what is on screen, no speech, no music."
+     --prompt "<shot size, lens, camera>. <the character description, pasted word for word>. <where they are in the frame and which way they look>. <one action, start to finish, saying who moves each object; they breathe>. <the place>. <the scene's light line, word for word>. <where the light falls in this shot>. Sound: only the natural sound of what is on screen, no speech, no music."
    ```
 
    Leave out `--genre comedy` for a film that isn't a comedy. For a clip where the character speaks, put the line in quotes in place of "no speech" (step 2).

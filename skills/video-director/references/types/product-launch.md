@@ -50,7 +50,7 @@ Show integrations as a stream of real logos (near ones fast, far ones slow) dock
 
 ## Generated media in launch films
 
-People and b-roll earn a place where the benefit is human (the person before and after) or not visible on screen. Generated media never shows UI, data or results. Keep generated hand and prop shots short.
+People and b-roll earn a place where the benefit is human (the person before and after) or not visible on screen. Generated media never shows UI, data or results. Keep generated hand and prop shots short. A physical product in a generated shot stays still while the light moves, and the real product is used wherever its logo, color or shape must be exact (`../generated-clips.md`, section 5).
 
 ## Examples seen in strong films (not rules)
 
